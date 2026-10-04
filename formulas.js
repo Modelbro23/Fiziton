@@ -2124,6 +2124,1680 @@ const formulas = [
     calc: (x) => x.p * x.t,
     resultLabel: 'A',
     resultUnit: 'Дж'
+  },
+
+    // =====================> ОПТИКА
+  {
+    id: 'reflection-angle',
+    section: 'optika',
+    class: 8,
+    title: 'Закон отражения',
+    formula: 'α = γ',
+    inputs: [
+      { key: 'a', label: 'Угол падения α', unit: '°' }
+    ],
+    calc: (x) => x.a,
+    resultLabel: 'γ',
+    resultUnit: '°'
+  },
+  {
+    id: 'refraction-snell',
+    section: 'optika',
+    class: 11,
+    title: 'Закон преломления (Снеллиус)',
+    formula: 'sin α / sin β = n₂ / n₁',
+    inputs: [
+      { key: 'a', label: 'Угол падения α', unit: '°' },
+      { key: 'n1', label: 'Показатель n₁', unit: '' },
+      { key: 'n2', label: 'Показатель n₂', unit: '' }
+    ],
+    calc: (x) => {
+      const sinA = Math.sin(x.a * Math.PI / 180);
+      const sinB = sinA * x.n1 / x.n2;
+      return Math.asin(sinB) * 180 / Math.PI;
+    },
+    resultLabel: 'β',
+    resultUnit: '°'
+  },
+  {
+    id: 'refractive-index',
+    section: 'optika',
+    class: 11,
+    title: 'Показатель преломления',
+    formula: 'n = c / v',
+    inputs: [
+      { key: 'v', label: 'Скорость света в среде v', unit: 'м/с' }
+    ],
+    calc: (x) => 3e8 / x.v,
+    resultLabel: 'n',
+    resultUnit: ''
+  },
+  {
+    id: 'speed-in-medium',
+    section: 'optika',
+    class: 11,
+    title: 'Скорость света в среде',
+    formula: 'v = c / n',
+    inputs: [
+      { key: 'n', label: 'Показатель n', unit: '' }
+    ],
+    calc: (x) => 3e8 / x.n,
+    resultLabel: 'v',
+    resultUnit: 'м/с'
+  },
+  {
+    id: 'critical-angle',
+    section: 'optika',
+    class: 11,
+    title: 'Предельный угол полного отражения',
+    formula: 'sin α₀ = 1 / n',
+    inputs: [
+      { key: 'n', label: 'Показатель n', unit: '' }
+    ],
+    calc: (x) => Math.asin(1 / x.n) * 180 / Math.PI,
+    resultLabel: 'α₀',
+    resultUnit: '°'
+  },
+  {
+    id: 'thin-lens',
+    section: 'optika',
+    class: 11,
+    title: 'Формула тонкой линзы',
+    formula: '1/F = 1/d + 1/f',
+    inputs: [
+      { key: 'd', label: 'Расстояние до предмета d', unit: 'м' },
+      { key: 'f', label: 'Расстояние до изображения f', unit: 'м' }
+    ],
+    calc: (x) => 1 / (1 / x.d + 1 / x.f),
+    resultLabel: 'F',
+    resultUnit: 'м'
+  },
+  {
+    id: 'lens-distance',
+    section: 'optika',
+    class: 11,
+    title: 'Расстояние до изображения',
+    formula: 'f = F·d / (d − F)',
+    inputs: [
+      { key: 'f', label: 'Фокусное расстояние F', unit: 'м' },
+      { key: 'd', label: 'Расстояние до предмета d', unit: 'м' }
+    ],
+    calc: (x) => x.f * x.d / (x.d - x.f),
+    resultLabel: 'f',
+    resultUnit: 'м'
+  },
+  {
+    id: 'lens-magnification',
+    section: 'optika',
+    class: 11,
+    title: 'Увеличение линзы',
+    formula: 'Γ = f / d',
+    inputs: [
+      { key: 'f', label: 'Расстояние до изображения f', unit: 'м' },
+      { key: 'd', label: 'Расстояние до предмета d', unit: 'м' }
+    ],
+    calc: (x) => x.f / x.d,
+    resultLabel: 'Γ',
+    resultUnit: ''
+  },
+  {
+    id: 'optical-power',
+    section: 'optika',
+    class: 11,
+    title: 'Оптическая сила линзы',
+    formula: 'D = 1 / F',
+    inputs: [
+      { key: 'f', label: 'Фокусное расстояние F', unit: 'м' }
+    ],
+    calc: (x) => 1 / x.f,
+    resultLabel: 'D',
+    resultUnit: 'дптр'
+  },
+  {
+    id: 'focal-length',
+    section: 'optika',
+    class: 11,
+    title: 'Фокусное расстояние через D',
+    formula: 'F = 1 / D',
+    inputs: [
+      { key: 'd', label: 'Оптическая сила D', unit: 'дптр' }
+    ],
+    calc: (x) => 1 / x.d,
+    resultLabel: 'F',
+    resultUnit: 'м'
+  },
+  {
+    id: 'photon-energy',
+    section: 'optika',
+    class: 11,
+    title: 'Энергия фотона',
+    formula: 'E = h·ν',
+    inputs: [
+      { key: 'nu', label: 'Частота ν', unit: 'Гц' }
+    ],
+    calc: (x) => 6.63e-34 * x.nu,
+    resultLabel: 'E',
+    resultUnit: 'Дж'
+  },
+  {
+    id: 'photon-energy-wavelength',
+    section: 'optika',
+    class: 11,
+    title: 'Энергия фотона через длину волны',
+    formula: 'E = h·c / λ',
+    inputs: [
+      { key: 'lambda', label: 'Длина волны λ', unit: 'м' }
+    ],
+    calc: (x) => 6.63e-34 * 3e8 / x.lambda,
+    resultLabel: 'E',
+    resultUnit: 'Дж'
+  },
+  {
+    id: 'photon-momentum',
+    section: 'optika',
+    class: 11,
+    title: 'Импульс фотона',
+    formula: 'p = h / λ',
+    inputs: [
+      { key: 'lambda', label: 'Длина волны λ', unit: 'м' }
+    ],
+    calc: (x) => 6.63e-34 / x.lambda,
+    resultLabel: 'p',
+    resultUnit: 'кг·м/с'
+  },
+  {
+    id: 'photon-frequency',
+    section: 'optika',
+    class: 11,
+    title: 'Частота фотона через энергию',
+    formula: 'ν = E / h',
+    inputs: [
+      { key: 'e', label: 'Энергия E', unit: 'Дж' }
+    ],
+    calc: (x) => x.e / 6.63e-34,
+    resultLabel: 'ν',
+    resultUnit: 'Гц'
+  },
+  {
+    id: 'wavelength-frequency',
+    section: 'optika',
+    class: 11,
+    title: 'Длина волны через частоту',
+    formula: 'λ = c / ν',
+    inputs: [
+      { key: 'nu', label: 'Частота ν', unit: 'Гц' }
+    ],
+    calc: (x) => 3e8 / x.nu,
+    resultLabel: 'λ',
+    resultUnit: 'м'
+  },
+  {
+    id: 'einstein-photoeffect',
+    section: 'optika',
+    class: 11,
+    title: 'Уравнение Эйнштейна для фотоэффекта',
+    formula: 'h·ν = A + Ek',
+    inputs: [
+      { key: 'nu', label: 'Частота ν', unit: 'Гц' },
+      { key: 'a', label: 'Работа выхода A', unit: 'Дж' }
+    ],
+    calc: (x) => 6.63e-34 * x.nu - x.a,
+    resultLabel: 'Ek',
+    resultUnit: 'Дж'
+  },
+  {
+    id: 'red-border',
+    section: 'optika',
+    class: 11,
+    title: 'Красная граница фотоэффекта',
+    formula: 'ν₀ = A / h',
+    inputs: [
+      { key: 'a', label: 'Работа выхода A', unit: 'Дж' }
+    ],
+    calc: (x) => x.a / 6.63e-34,
+    resultLabel: 'ν₀',
+    resultUnit: 'Гц'
+  },
+  {
+    id: 'diffraction-grating',
+    section: 'optika',
+    class: 11,
+    title: 'Формула дифракционной решётки',
+    formula: 'd·sin φ = k·λ',
+    inputs: [
+      { key: 'd', label: 'Период решётки d', unit: 'м' },
+      { key: 'k', label: 'Порядок максимума k', unit: '' },
+      { key: 'lambda', label: 'Длина волны λ', unit: 'м' }
+    ],
+    calc: (x) => Math.asin(x.k * x.lambda / x.d) * 180 / Math.PI,
+    resultLabel: 'φ',
+    resultUnit: '°'
+  },
+  {
+    id: 'grating-period',
+    section: 'optika',
+    class: 11,
+    title: 'Период дифракционной решётки',
+    formula: 'd = 1 / N',
+    inputs: [
+      { key: 'n', label: 'Число штрихов на 1 м N', unit: '1/м' }
+    ],
+    calc: (x) => 1 / x.n,
+    resultLabel: 'd',
+    resultUnit: 'м'
+  },
+  {
+    id: 'interference-max',
+    section: 'optika',
+    class: 11,
+    title: 'Условие максимума интерференции',
+    formula: 'Δd = k·λ',
+    inputs: [
+      { key: 'k', label: 'Порядок k', unit: '' },
+      { key: 'lambda', label: 'Длина волны λ', unit: 'м' }
+    ],
+    calc: (x) => x.k * x.lambda,
+    resultLabel: 'Δd',
+    resultUnit: 'м'
+  },
+  {
+    id: 'interference-min',
+    section: 'optika',
+    class: 11,
+    title: 'Условие минимума интерференции',
+    formula: 'Δd = (2k+1)·λ / 2',
+    inputs: [
+      { key: 'k', label: 'Порядок k', unit: '' },
+      { key: 'lambda', label: 'Длина волны λ', unit: 'м' }
+    ],
+    calc: (x) => (2 * x.k + 1) * x.lambda / 2,
+    resultLabel: 'Δd',
+    resultUnit: 'м'
+  },
+  {
+    id: 'light-pressure',
+    section: 'optika',
+    class: 11,
+    title: 'Давление света',
+    formula: 'P = I / c',
+    inputs: [
+      { key: 'i', label: 'Интенсивность I', unit: 'Вт/м²' }
+    ],
+    calc: (x) => x.i / 3e8,
+    resultLabel: 'P',
+    resultUnit: 'Па'
+  },
+  {
+    id: 'magnifier-magnification',
+    section: 'optika',
+    class: 11,
+    title: 'Увеличение лупы',
+    formula: 'Γ = 0.25 / F',
+    inputs: [
+      { key: 'f', label: 'Фокусное расстояние F', unit: 'м' }
+    ],
+    calc: (x) => 0.25 / x.f,
+    resultLabel: 'Γ',
+    resultUnit: ''
+  },
+  
+    // =====================> АТОМНАЯ И ЯДЕРНАЯ ФИЗИКА
+  {
+    id: 'mass-defect',
+    section: 'atom',
+    class: 11,
+    title: 'Дефект массы ядра',
+    formula: 'Δm = Z·mₚ + N·mₙ − M',
+    inputs: [
+      { key: 'z', label: 'Число протонов Z', unit: '' },
+      { key: 'n', label: 'Число нейтронов N', unit: '' },
+      { key: 'm', label: 'Масса ядра M', unit: 'а.е.м.' }
+    ],
+    calc: (x) => x.z * 1.00728 + x.n * 1.00866 - x.m,
+    resultLabel: 'Δm',
+    resultUnit: 'а.е.м.'
+  },
+  {
+    id: 'binding-energy',
+    section: 'atom',
+    class: 11,
+    title: 'Энергия связи ядра',
+    formula: 'Eсв = Δm · c²',
+    inputs: [
+      { key: 'dm', label: 'Дефект массы Δm', unit: 'а.е.м.' }
+    ],
+    calc: (x) => x.dm * 931.5,
+    resultLabel: 'Eсв',
+    resultUnit: 'МэВ'
+  },
+  {
+    id: 'binding-energy-joule',
+    section: 'atom',
+    class: 11,
+    title: 'Энергия связи в Джоулях',
+    formula: 'E = Δm · c²',
+    inputs: [
+      { key: 'dm', label: 'Дефект массы Δm', unit: 'кг' }
+    ],
+    calc: (x) => x.dm * 9e16,
+    resultLabel: 'E',
+    resultUnit: 'Дж'
+  },
+  {
+    id: 'nuclear-reaction-energy',
+    section: 'atom',
+    class: 11,
+    title: 'Энергетический выход реакции',
+    formula: 'Q = (m₁ − m₂) · c²',
+    inputs: [
+      { key: 'm1', label: 'Масса до m₁', unit: 'а.е.м.' },
+      { key: 'm2', label: 'Масса после m₂', unit: 'а.е.м.' }
+    ],
+    calc: (x) => (x.m1 - x.m2) * 931.5,
+    resultLabel: 'Q',
+    resultUnit: 'МэВ'
+  },
+  {
+    id: 'radioactive-decay-law',
+    section: 'atom',
+    class: 11,
+    title: 'Закон радиоактивного распада',
+    formula: 'N = N₀ · 2^(−t/T)',
+    inputs: [
+      { key: 'n0', label: 'Начальное число N₀', unit: '' },
+      { key: 't', label: 'Время t', unit: 'с' },
+      { key: 'T', label: 'Период полураспада T', unit: 'с' }
+    ],
+    calc: (x) => x.n0 * Math.pow(2, -x.t / x.T),
+    resultLabel: 'N',
+    resultUnit: ''
+  },
+  {
+    id: 'half-life',
+    section: 'atom',
+    class: 11,
+    title: 'Период полураспада',
+    formula: 'T = ln2 / λ',
+    inputs: [
+      { key: 'lambda', label: 'Постоянная распада λ', unit: '1/с' }
+    ],
+    calc: (x) => 0.693 / x.lambda,
+    resultLabel: 'T',
+    resultUnit: 'с'
+  },
+  {
+    id: 'decay-constant',
+    section: 'atom',
+    class: 11,
+    title: 'Постоянная распада',
+    formula: 'λ = ln2 / T',
+    inputs: [
+      { key: 't', label: 'Период полураспада T', unit: 'с' }
+    ],
+    calc: (x) => 0.693 / x.t,
+    resultLabel: 'λ',
+    resultUnit: '1/с'
+  },
+  {
+    id: 'activity',
+    section: 'atom',
+    class: 11,
+    title: 'Активность радиоактивного вещества',
+    formula: 'A = λ · N',
+    inputs: [
+      { key: 'lambda', label: 'Постоянная λ', unit: '1/с' },
+      { key: 'n', label: 'Число ядер N', unit: '' }
+    ],
+    calc: (x) => x.lambda * x.n,
+    resultLabel: 'A',
+    resultUnit: 'Бк'
+  },
+  {
+    id: 'activity-decay',
+    section: 'atom',
+    class: 11,
+    title: 'Активность через время',
+    formula: 'A = A₀ · 2^(−t/T)',
+    inputs: [
+      { key: 'a0', label: 'Начальная активность A₀', unit: 'Бк' },
+      { key: 't', label: 'Время t', unit: 'с' },
+      { key: 'T', label: 'Период T', unit: 'с' }
+    ],
+    calc: (x) => x.a0 * Math.pow(2, -x.t / x.T),
+    resultLabel: 'A',
+    resultUnit: 'Бк'
+  },
+  {
+    id: 'bohr-frequency',
+    section: 'atom',
+    class: 11,
+    title: 'Частота излучения (формула Бора)',
+    formula: 'h·ν = E₂ − E₁',
+    inputs: [
+      { key: 'e2', label: 'Энергия E₂', unit: 'Дж' },
+      { key: 'e1', label: 'Энергия E₁', unit: 'Дж' }
+    ],
+    calc: (x) => (x.e2 - x.e1) / 6.63e-34,
+    resultLabel: 'ν',
+    resultUnit: 'Гц'
+  },
+  {
+    id: 'bohr-wavelength',
+    section: 'atom',
+    class: 11,
+    title: 'Длина волны излучения',
+    formula: 'λ = h·c / (E₂ − E₁)',
+    inputs: [
+      { key: 'e2', label: 'Энергия E₂', unit: 'Дж' },
+      { key: 'e1', label: 'Энергия E₁', unit: 'Дж' }
+    ],
+    calc: (x) => 6.63e-34 * 3e8 / (x.e2 - x.e1),
+    resultLabel: 'λ',
+    resultUnit: 'м'
+  },
+  {
+    id: 'hydrogen-energy',
+    section: 'atom',
+    class: 11,
+    title: 'Энергия уровня водорода',
+    formula: 'En = −13.6 / n²',
+    inputs: [
+      { key: 'n', label: 'Номер уровня n', unit: '' }
+    ],
+    calc: (x) => -13.6 / (x.n * x.n),
+    resultLabel: 'En',
+    resultUnit: 'эВ'
+  },
+  {
+    id: 'ionization-energy',
+    section: 'atom',
+    class: 11,
+    title: 'Энергия ионизации водорода',
+    formula: 'E = 13.6 · (1/n₁² − 1/n₂²)',
+    inputs: [
+      { key: 'n1', label: 'Уровень n₁', unit: '' },
+      { key: 'n2', label: 'Уровень n₂', unit: '' }
+    ],
+    calc: (x) => 13.6 * (1 / (x.n1 * x.n1) - 1 / (x.n2 * x.n2)),
+    resultLabel: 'E',
+    resultUnit: 'эВ'
+  },
+  {
+    id: 'rydberg',
+    section: 'atom',
+    class: 11,
+    title: 'Формула Ридберга',
+    formula: '1/λ = R·(1/n₁² − 1/n₂²)',
+    inputs: [
+      { key: 'n1', label: 'Уровень n₁', unit: '' },
+      { key: 'n2', label: 'Уровень n₂', unit: '' }
+    ],
+    calc: (x) => 1 / (1.097e7 * (1 / (x.n1 * x.n1) - 1 / (x.n2 * x.n2))),
+    resultLabel: 'λ',
+    resultUnit: 'м'
+  },
+  {
+    id: 'de-broglie-wavelength',
+    section: 'atom',
+    class: 11,
+    title: 'Длина волны де Бройля',
+    formula: 'λ = h / (m·v)',
+    inputs: [
+      { key: 'm', label: 'Масса m', unit: 'кг' },
+      { key: 'v', label: 'Скорость v', unit: 'м/с' }
+    ],
+    calc: (x) => 6.63e-34 / (x.m * x.v),
+    resultLabel: 'λ',
+    resultUnit: 'м'
+  },
+  {
+    id: 'de-broglie-momentum',
+    section: 'atom',
+    class: 11,
+    title: 'Длина волны через импульс',
+    formula: 'λ = h / p',
+    inputs: [
+      { key: 'p', label: 'Импульс p', unit: 'кг·м/с' }
+    ],
+    calc: (x) => 6.63e-34 / x.p,
+    resultLabel: 'λ',
+    resultUnit: 'м'
+  },
+  {
+    id: 'photon-mass',
+    section: 'atom',
+    class: 11,
+    title: 'Масса фотона',
+    formula: 'm = h·ν / c²',
+    inputs: [
+      { key: 'nu', label: 'Частота ν', unit: 'Гц' }
+    ],
+    calc: (x) => 6.63e-34 * x.nu / 9e16,
+    resultLabel: 'm',
+    resultUnit: 'кг'
+  },
+  {
+    id: 'nuclear-radius',
+    section: 'atom',
+    class: 11,
+    title: 'Радиус ядра',
+    formula: 'R = 1.2e-15 · A^(1/3)',
+    inputs: [
+      { key: 'a', label: 'Массовое число A', unit: '' }
+    ],
+    calc: (x) => 1.2e-15 * Math.pow(x.a, 1 / 3),
+    resultLabel: 'R',
+    resultUnit: 'м'
+  },
+  {
+    id: 'gamma-energy',
+    section: 'atom',
+    class: 11,
+    title: 'Энергия гамма-кванта',
+    formula: 'E = h·c / λ',
+    inputs: [
+      { key: 'lambda', label: 'Длина волны λ', unit: 'м' }
+    ],
+    calc: (x) => 6.63e-34 * 3e8 / x.lambda,
+    resultLabel: 'E',
+    resultUnit: 'Дж'
+  },
+  {
+    id: 'nuclear-binding-per-nucleon',
+    section: 'atom',
+    class: 11,
+    title: 'Удельная энергия связи',
+    formula: 'Eуд = Eсв / A',
+    inputs: [
+      { key: 'esv', label: 'Энергия связи Eсв', unit: 'МэВ' },
+      { key: 'a', label: 'Массовое число A', unit: '' }
+    ],
+    calc: (x) => x.esv / x.a,
+    resultLabel: 'Eуд',
+    resultUnit: 'МэВ'
+  },
+
+  // =====================> МАГНЕТИЗМ
+  {
+    id: 'ampere-force',
+    section: 'electro',
+    class: 11,
+    title: 'Сила Ампера',
+    formula: 'F = B·I·L·sin α',
+    inputs: [
+      { key: 'b', label: 'Индукция B', unit: 'Тл' },
+      { key: 'i', label: 'Сила тока I', unit: 'А' },
+      { key: 'l', label: 'Длина L', unit: 'м' },
+      { key: 'a', label: 'Угол α', unit: '°' }
+    ],
+    calc: (x) => x.b * x.i * x.l * Math.sin(x.a * Math.PI / 180),
+    resultLabel: 'F',
+    resultUnit: 'Н'
+  },
+  {
+    id: 'lorentz-force',
+    section: 'electro',
+    class: 11,
+    title: 'Сила Лоренца',
+    formula: 'F = q·v·B·sin α',
+    inputs: [
+      { key: 'q', label: 'Заряд q', unit: 'Кл' },
+      { key: 'v', label: 'Скорость v', unit: 'м/с' },
+      { key: 'b', label: 'Индукция B', unit: 'Тл' },
+      { key: 'a', label: 'Угол α', unit: '°' }
+    ],
+    calc: (x) => x.q * x.v * x.b * Math.sin(x.a * Math.PI / 180),
+    resultLabel: 'F',
+    resultUnit: 'Н'
+  },
+  {
+    id: 'lorentz-radius',
+    section: 'electro',
+    class: 11,
+    title: 'Радиус траектории в магнитном поле',
+    formula: 'R = m·v / (q·B)',
+    inputs: [
+      { key: 'm', label: 'Масса m', unit: 'кг' },
+      { key: 'v', label: 'Скорость v', unit: 'м/с' },
+      { key: 'q', label: 'Заряд q', unit: 'Кл' },
+      { key: 'b', label: 'Индукция B', unit: 'Тл' }
+    ],
+    calc: (x) => x.m * x.v / (x.q * x.b),
+    resultLabel: 'R',
+    resultUnit: 'м'
+  },
+  {
+    id: 'magnetic-flux',
+    section: 'electro',
+    class: 11,
+    title: 'Магнитный поток',
+    formula: 'Φ = B·S·cos α',
+    inputs: [
+      { key: 'b', label: 'Индукция B', unit: 'Тл' },
+      { key: 's', label: 'Площадь S', unit: 'м²' },
+      { key: 'a', label: 'Угол α', unit: '°' }
+    ],
+    calc: (x) => x.b * x.s * Math.cos(x.a * Math.PI / 180),
+    resultLabel: 'Φ',
+    resultUnit: 'Вб'
+  },
+  {
+    id: 'flux-from-induction',
+    section: 'electro',
+    class: 11,
+    title: 'Индукция через поток',
+    formula: 'B = Φ / (S·cos α)',
+    inputs: [
+      { key: 'f', label: 'Магнитный поток Φ', unit: 'Вб' },
+      { key: 's', label: 'Площадь S', unit: 'м²' },
+      { key: 'a', label: 'Угол α', unit: '°' }
+    ],
+    calc: (x) => x.f / (x.s * Math.cos(x.a * Math.PI / 180)),
+    resultLabel: 'B',
+    resultUnit: 'Тл'
+  },
+  {
+    id: 'faraday-law',
+    section: 'electro',
+    class: 11,
+    title: 'Закон электромагнитной индукции',
+    formula: 'ε = −ΔΦ / Δt',
+    inputs: [
+      { key: 'df', label: 'Изменение потока ΔΦ', unit: 'Вб' },
+      { key: 'dt', label: 'Время Δt', unit: 'с' }
+    ],
+    calc: (x) => -x.df / x.dt,
+    resultLabel: 'ε',
+    resultUnit: 'В'
+  },
+  {
+    id: 'emf-induction',
+    section: 'electro',
+    class: 11,
+    title: 'ЭДС индукции в движущемся проводнике',
+    formula: 'ε = B·L·v·sin α',
+    inputs: [
+      { key: 'b', label: 'Индукция B', unit: 'Тл' },
+      { key: 'l', label: 'Длина L', unit: 'м' },
+      { key: 'v', label: 'Скорость v', unit: 'м/с' },
+      { key: 'a', label: 'Угол α', unit: '°' }
+    ],
+    calc: (x) => x.b * x.l * x.v * Math.sin(x.a * Math.PI / 180),
+    resultLabel: 'ε',
+    resultUnit: 'В'
+  },
+  {
+    id: 'self-induction-emf',
+    section: 'electro',
+    class: 11,
+    title: 'ЭДС самоиндукции',
+    formula: 'ε = −L·ΔI / Δt',
+    inputs: [
+      { key: 'l', label: 'Индуктивность L', unit: 'Гн' },
+      { key: 'di', label: 'Изменение тока ΔI', unit: 'А' },
+      { key: 'dt', label: 'Время Δt', unit: 'с' }
+    ],
+    calc: (x) => -x.l * x.di / x.dt,
+    resultLabel: 'ε',
+    resultUnit: 'В'
+  },
+  {
+    id: 'inductance',
+    section: 'electro',
+    class: 11,
+    title: 'Индуктивность через поток',
+    formula: 'L = Φ / I',
+    inputs: [
+      { key: 'f', label: 'Магнитный поток Φ', unit: 'Вб' },
+      { key: 'i', label: 'Сила тока I', unit: 'А' }
+    ],
+    calc: (x) => x.f / x.i,
+    resultLabel: 'L',
+    resultUnit: 'Гн'
+  },
+  {
+    id: 'inductor-energy',
+    section: 'electro',
+    class: 11,
+    title: 'Энергия магнитного поля катушки',
+    formula: 'W = L·I² / 2',
+    inputs: [
+      { key: 'l', label: 'Индуктивность L', unit: 'Гн' },
+      { key: 'i', label: 'Сила тока I', unit: 'А' }
+    ],
+    calc: (x) => x.l * x.i * x.i / 2,
+    resultLabel: 'W',
+    resultUnit: 'Дж'
+  },
+  {
+    id: 'magnetic-permeability',
+    section: 'electro',
+    class: 11,
+    title: 'Магнитная индукция в среде',
+    formula: 'B = μ₀·μ·H',
+    inputs: [
+      { key: 'mu', label: 'Магнитная проницаемость μ', unit: '' },
+      { key: 'h', label: 'Напряжённость H', unit: 'А/м' }
+    ],
+    calc: (x) => 4 * Math.PI * 1e-7 * x.mu * x.h,
+    resultLabel: 'B',
+    resultUnit: 'Тл'
+  },
+  {
+    id: 'magnetic-field-wire',
+    section: 'electro',
+    class: 11,
+    title: 'Индукция поля прямого провода',
+    formula: 'B = μ₀·I / (2π·r)',
+    inputs: [
+      { key: 'i', label: 'Сила тока I', unit: 'А' },
+      { key: 'r', label: 'Расстояние r', unit: 'м' }
+    ],
+    calc: (x) => 4 * Math.PI * 1e-7 * x.i / (2 * Math.PI * x.r),
+    resultLabel: 'B',
+    resultUnit: 'Тл'
+  },
+  {
+    id: 'magnetic-field-solenoid',
+    section: 'electro',
+    class: 11,
+    title: 'Индукция поля внутри соленоида',
+    formula: 'B = μ₀·μ·n·I',
+    inputs: [
+      { key: 'mu', label: 'Проницаемость μ', unit: '' },
+      { key: 'n', label: 'Плотность витков n', unit: '1/м' },
+      { key: 'i', label: 'Сила тока I', unit: 'А' }
+    ],
+    calc: (x) => 4 * Math.PI * 1e-7 * x.mu * x.n * x.i,
+    resultLabel: 'B',
+    resultUnit: 'Тл'
+  },
+  {
+    id: 'charge-in-magnetic-field',
+    section: 'electro',
+    class: 11,
+    title: 'Период обращения частицы',
+    formula: 'T = 2π·m / (q·B)',
+    inputs: [
+      { key: 'm', label: 'Масса m', unit: 'кг' },
+      { key: 'q', label: 'Заряд q', unit: 'Кл' },
+      { key: 'b', label: 'Индукция B', unit: 'Тл' }
+    ],
+    calc: (x) => 2 * Math.PI * x.m / (x.q * x.b),
+    resultLabel: 'T',
+    resultUnit: 'с'
+  },
+  {
+    id: 'transformer-ratio',
+    section: 'electro',
+    class: 11,
+    title: 'Коэффициент трансформации',
+    formula: 'k = U₁ / U₂ = N₁ / N₂',
+    inputs: [
+      { key: 'u1', label: 'Напряжение U₁', unit: 'В' },
+      { key: 'u2', label: 'Напряжение U₂', unit: 'В' }
+    ],
+    calc: (x) => x.u1 / x.u2,
+    resultLabel: 'k',
+    resultUnit: ''
+  },
+  {
+    id: 'transformer-voltage',
+    section: 'electro',
+    class: 11,
+    title: 'Напряжение на вторичной обмотке',
+    formula: 'U₂ = U₁·N₂ / N₁',
+    inputs: [
+      { key: 'u1', label: 'Напряжение U₁', unit: 'В' },
+      { key: 'n1', label: 'Витки N₁', unit: '' },
+      { key: 'n2', label: 'Витки N₂', unit: '' }
+    ],
+    calc: (x) => x.u1 * x.n2 / x.n1,
+    resultLabel: 'U₂',
+    resultUnit: 'В'
+  },
+  {
+    id: 'transformer-power',
+    section: 'electro',
+    class: 11,
+    title: 'Мощность трансформатора',
+    formula: 'P = U·I',
+    inputs: [
+      { key: 'u', label: 'Напряжение U', unit: 'В' },
+      { key: 'i', label: 'Сила тока I', unit: 'А' }
+    ],
+    calc: (x) => x.u * x.i,
+    resultLabel: 'P',
+    resultUnit: 'Вт'
+  },
+  {
+    id: 'induction-current',
+    section: 'electro',
+    class: 11,
+    title: 'Индукционный ток',
+    formula: 'I = ε / R',
+    inputs: [
+      { key: 'eps', label: 'ЭДС ε', unit: 'В' },
+      { key: 'r', label: 'Сопротивление R', unit: 'Ом' }
+    ],
+    calc: (x) => x.eps / x.r,
+    resultLabel: 'I',
+    resultUnit: 'А'
+  },
+  {
+    id: 'magnetic-energy-density',
+    section: 'electro',
+    class: 11,
+    title: 'Плотность энергии магнитного поля',
+    formula: 'w = B² / (2·μ₀)',
+    inputs: [
+      { key: 'b', label: 'Индукция B', unit: 'Тл' }
+    ],
+    calc: (x) => x.b * x.b / (2 * 4 * Math.PI * 1e-7),
+    resultLabel: 'w',
+    resultUnit: 'Дж/м³'
+  },
+  {
+    id: 'lenz-rule-direction',
+    section: 'electro',
+    class: 11,
+    title: 'Направление индукционного тока (правило Ленца)',
+    formula: 'ε = −ΔΦ/Δt',
+    inputs: [
+      { key: 'df', label: 'ΔΦ', unit: 'Вб' },
+      { key: 'dt', label: 'Δt', unit: 'с' }
+    ],
+    calc: (x) => -x.df / x.dt,
+    resultLabel: 'ε',
+    resultUnit: 'В'
+  },
+
+    // =====================> ЗАКОНЫ СОХРАНЕНИЯ
+  {
+    id: 'momentum-conservation',
+    section: 'mehanika',
+    class: 9,
+    title: 'Закон сохранения импульса',
+    formula: 'm₁·v₁ + m₂·v₂ = m₁·u₁ + m₂·u₂',
+    inputs: [
+      { key: 'm1', label: 'Масса m₁', unit: 'кг' },
+      { key: 'v1', label: 'Скорость v₁ (до)', unit: 'м/с' },
+      { key: 'm2', label: 'Масса m₂', unit: 'кг' },
+      { key: 'v2', label: 'Скорость v₂ (до)', unit: 'м/с' },
+      { key: 'u1', label: 'Скорость u₁ (после)', unit: 'м/с' }
+    ],
+    calc: (x) => (x.m1 * x.v1 + x.m2 * x.v2 - x.m1 * x.u1) / x.m2,
+    resultLabel: 'u₂',
+    resultUnit: 'м/с'
+  },
+  {
+    id: 'elastic-collision',
+    section: 'mehanika',
+    class: 10,
+    title: 'Скорость после упругого удара (1-е тело)',
+    formula: 'u₁ = (m₁−m₂)·v₁ / (m₁+m₂)',
+    inputs: [
+      { key: 'm1', label: 'Масса m₁', unit: 'кг' },
+      { key: 'm2', label: 'Масса m₂', unit: 'кг' },
+      { key: 'v1', label: 'Скорость v₁', unit: 'м/с' }
+    ],
+    calc: (x) => (x.m1 - x.m2) * x.v1 / (x.m1 + x.m2),
+    resultLabel: 'u₁',
+    resultUnit: 'м/с'
+  },
+  {
+    id: 'elastic-collision-second',
+    section: 'mehanika',
+    class: 10,
+    title: 'Скорость после упругого удара (2-е тело)',
+    formula: 'u₂ = 2·m₁·v₁ / (m₁+m₂)',
+    inputs: [
+      { key: 'm1', label: 'Масса m₁', unit: 'кг' },
+      { key: 'm2', label: 'Масса m₂', unit: 'кг' },
+      { key: 'v1', label: 'Скорость v₁', unit: 'м/с' }
+    ],
+    calc: (x) => 2 * x.m1 * x.v1 / (x.m1 + x.m2),
+    resultLabel: 'u₂',
+    resultUnit: 'м/с'
+  },
+  {
+    id: 'inelastic-collision',
+    section: 'mehanika',
+    class: 10,
+    title: 'Скорость после неупругого удара',
+    formula: 'u = (m₁·v₁ + m₂·v₂) / (m₁+m₂)',
+    inputs: [
+      { key: 'm1', label: 'Масса m₁', unit: 'кг' },
+      { key: 'v1', label: 'Скорость v₁', unit: 'м/с' },
+      { key: 'm2', label: 'Масса m₂', unit: 'кг' },
+      { key: 'v2', label: 'Скорость v₂', unit: 'м/с' }
+    ],
+    calc: (x) => (x.m1 * x.v1 + x.m2 * x.v2) / (x.m1 + x.m2),
+    resultLabel: 'u',
+    resultUnit: 'м/с'
+  },
+
+  // =====================> РАБОТА И ЭНЕРГИЯ (расширение)
+  {
+    id: 'work-gravity',
+    section: 'mehanika',
+    class: 7,
+    title: 'Работа силы тяжести',
+    formula: 'A = m·g·(h₁ − h₂)',
+    inputs: [
+      { key: 'm', label: 'Масса m', unit: 'кг' },
+      { key: 'h1', label: 'Высота h₁', unit: 'м' },
+      { key: 'h2', label: 'Высота h₂', unit: 'м' }
+    ],
+    calc: (x) => x.m * 9.8 * (x.h1 - x.h2),
+    resultLabel: 'A',
+    resultUnit: 'Дж'
+  },
+  {
+    id: 'work-friction',
+    section: 'mehanika',
+    class: 7,
+    title: 'Работа силы трения',
+    formula: 'A = −μ·m·g·S',
+    inputs: [
+      { key: 'mu', label: 'Коэффициент μ', unit: '' },
+      { key: 'm', label: 'Масса m', unit: 'кг' },
+      { key: 's', label: 'Путь S', unit: 'м' }
+    ],
+    calc: (x) => -x.mu * x.m * 9.8 * x.s,
+    resultLabel: 'A',
+    resultUnit: 'Дж'
+  },
+  {
+    id: 'full-mechanical-energy',
+    section: 'mehanika',
+    class: 9,
+    title: 'Полная механическая энергия',
+    formula: 'E = Ek + Ep',
+    inputs: [
+      { key: 'ek', label: 'Кинетическая Ek', unit: 'Дж' },
+      { key: 'ep', label: 'Потенциальная Ep', unit: 'Дж' }
+    ],
+    calc: (x) => x.ek + x.ep,
+    resultLabel: 'E',
+    resultUnit: 'Дж'
+  },
+  {
+    id: 'energy-conservation',
+    section: 'mehanika',
+    class: 9,
+    title: 'Закон сохранения энергии (маятник)',
+    formula: 'm·g·h = m·v² / 2',
+    inputs: [
+      { key: 'h', label: 'Высота падения h', unit: 'м' }
+    ],
+    calc: (x) => Math.sqrt(2 * 9.8 * x.h),
+    resultLabel: 'v',
+    resultUnit: 'м/с'
+  },
+  {
+    id: 'potential-spring',
+    section: 'mehanika',
+    class: 9,
+    title: 'Потенциальная энергия пружины',
+    formula: 'Ep = k·Δx² / 2',
+    inputs: [
+      { key: 'k', label: 'Жёсткость k', unit: 'Н/м' },
+      { key: 'x', label: 'Растяжение Δx', unit: 'м' }
+    ],
+    calc: (x) => x.k * x.x * x.x / 2,
+    resultLabel: 'Ep',
+    resultUnit: 'Дж'
+  },
+
+  // =====================> ГИДРОСТАТИКА
+  {
+    id: 'pascal-law',
+    section: 'mehanika',
+    class: 7,
+    title: 'Закон Паскаля (сила на поршне)',
+    formula: 'F₂ = F₁ · S₂ / S₁',
+    inputs: [
+      { key: 'f1', label: 'Сила F₁', unit: 'Н' },
+      { key: 's1', label: 'Площадь S₁', unit: 'м²' },
+      { key: 's2', label: 'Площадь S₂', unit: 'м²' }
+    ],
+    calc: (x) => x.f1 * x.s2 / x.s1,
+    resultLabel: 'F₂',
+    resultUnit: 'Н'
+  },
+  {
+    id: 'atmospheric-pressure',
+    section: 'mehanika',
+    class: 7,
+    title: 'Атмосферное давление',
+    formula: 'P = ρ·g·h',
+    inputs: [
+      { key: 'rho', label: 'Плотность ρ', unit: 'кг/м³' },
+      { key: 'h', label: 'Высота столба h', unit: 'м' }
+    ],
+    calc: (x) => x.rho * 9.8 * x.h,
+    resultLabel: 'P',
+    resultUnit: 'Па'
+  },
+  {
+    id: 'communicating-vessels',
+    section: 'mehanika',
+    class: 7,
+    title: 'Сообщающиеся сосуды',
+    formula: 'h₁ / h₂ = ρ₂ / ρ₁',
+    inputs: [
+      { key: 'h1', label: 'Высота h₁', unit: 'м' },
+      { key: 'rho1', label: 'Плотность ρ₁', unit: 'кг/м³' },
+      { key: 'rho2', label: 'Плотность ρ₂', unit: 'кг/м³' }
+    ],
+    calc: (x) => x.h1 * x.rho1 / x.rho2,
+    resultLabel: 'h₂',
+    resultUnit: 'м'
+  },
+  {
+    id: 'hydraulic-press-force',
+    section: 'mehanika',
+    class: 7,
+    title: 'Сила гидравлического пресса',
+    formula: 'F₂ / F₁ = S₂ / S₁',
+    inputs: [
+      { key: 'f1', label: 'Сила F₁', unit: 'Н' },
+      { key: 's1', label: 'Площадь S₁', unit: 'м²' },
+      { key: 's2', label: 'Площадь S₂', unit: 'м²' }
+    ],
+    calc: (x) => x.f1 * x.s2 / x.s1,
+    resultLabel: 'F₂',
+    resultUnit: 'Н'
+  },
+  {
+    id: 'body-in-liquid-weight',
+    section: 'mehanika',
+    class: 7,
+    title: 'Вес тела в жидкости',
+    formula: 'P = m·g − ρ_ж·g·V',
+    inputs: [
+      { key: 'm', label: 'Масса m', unit: 'кг' },
+      { key: 'rho', label: 'Плотность жидкости ρ', unit: 'кг/м³' },
+      { key: 'v', label: 'Объём V', unit: 'м³' }
+    ],
+    calc: (x) => x.m * 9.8 - x.rho * 9.8 * x.v,
+    resultLabel: 'P',
+    resultUnit: 'Н'
+  },
+
+  // =====================> КОЛЕБАНИЯ И ВОЛНЫ (расширение)
+  {
+    id: 'harmonic-oscillation',
+    section: 'mehanika',
+    class: 9,
+    title: 'Уравнение гармонических колебаний',
+    formula: 'x = A·cos(ω·t)',
+    inputs: [
+      { key: 'a', label: 'Амплитуда A', unit: 'м' },
+      { key: 'w', label: 'Частота ω', unit: 'рад/с' },
+      { key: 't', label: 'Время t', unit: 'с' }
+    ],
+    calc: (x) => x.a * Math.cos(x.w * x.t),
+    resultLabel: 'x',
+    resultUnit: 'м'
+  },
+  {
+    id: 'harmonic-velocity',
+    section: 'mehanika',
+    class: 9,
+    title: 'Скорость при гармонических колебаниях',
+    formula: 'v = A·ω',
+    inputs: [
+      { key: 'a', label: 'Амплитуда A', unit: 'м' },
+      { key: 'w', label: 'Частота ω', unit: 'рад/с' }
+    ],
+    calc: (x) => x.a * x.w,
+    resultLabel: 'v',
+    resultUnit: 'м/с'
+  },
+  {
+    id: 'harmonic-acceleration',
+    section: 'mehanika',
+    class: 9,
+    title: 'Ускорение при гармонических колебаниях',
+    formula: 'a = A·ω²',
+    inputs: [
+      { key: 'a', label: 'Амплитуда A', unit: 'м' },
+      { key: 'w', label: 'Частота ω', unit: 'рад/с' }
+    ],
+    calc: (x) => x.a * x.w * x.w,
+    resultLabel: 'a',
+    resultUnit: 'м/с²'
+  },
+  {
+    id: 'angular-frequency',
+    section: 'mehanika',
+    class: 9,
+    title: 'Циклическая частота',
+    formula: 'ω = 2π·ν',
+    inputs: [
+      { key: 'nu', label: 'Частота ν', unit: 'Гц' }
+    ],
+    calc: (x) => 2 * Math.PI * x.nu,
+    resultLabel: 'ω',
+    resultUnit: 'рад/с'
+  },
+  {
+    id: 'wave-number',
+    section: 'mehanika',
+    class: 9,
+    title: 'Волновое число',
+    formula: 'k = 2π / λ',
+    inputs: [
+      { key: 'lambda', label: 'Длина волны λ', unit: 'м' }
+    ],
+    calc: (x) => 2 * Math.PI / x.lambda,
+    resultLabel: 'k',
+    resultUnit: 'рад/м'
+  },
+
+  // =====================> РАВНОВЕСИЕ
+  {
+    id: 'moment-equilibrium',
+    section: 'mehanika',
+    class: 7,
+    title: 'Условие равновесия рычага',
+    formula: 'M₁ = M₂',
+    inputs: [
+      { key: 'f1', label: 'Сила F₁', unit: 'Н' },
+      { key: 'l1', label: 'Плечо l₁', unit: 'м' },
+      { key: 'l2', label: 'Плечо l₂', unit: 'м' }
+    ],
+    calc: (x) => x.f1 * x.l1 / x.l2,
+    resultLabel: 'F₂',
+    resultUnit: 'Н'
+  },
+  {
+    id: 'center-of-mass',
+    section: 'mehanika',
+    class: 10,
+    title: 'Центр масс двух тел',
+    formula: 'x = (m₁·x₁ + m₂·x₂) / (m₁ + m₂)',
+    inputs: [
+      { key: 'm1', label: 'Масса m₁', unit: 'кг' },
+      { key: 'x1', label: 'Координата x₁', unit: 'м' },
+      { key: 'm2', label: 'Масса m₂', unit: 'кг' },
+      { key: 'x2', label: 'Координата x₂', unit: 'м' }
+    ],
+    calc: (x) => (x.m1 * x.x1 + x.m2 * x.x2) / (x.m1 + x.m2),
+    resultLabel: 'x',
+    resultUnit: 'м'
+  },
+  {
+    id: 'block-pulley',
+    section: 'mehanika',
+    class: 9,
+    title: 'Система через неподвижный блок',
+    formula: 'a = (m₁ − m₂)·g / (m₁ + m₂)',
+    inputs: [
+      { key: 'm1', label: 'Масса m₁', unit: 'кг' },
+      { key: 'm2', label: 'Масса m₂', unit: 'кг' }
+    ],
+    calc: (x) => (x.m1 - x.m2) * 9.8 / (x.m1 + x.m2),
+    resultLabel: 'a',
+    resultUnit: 'м/с²'
+  },
+  {
+    id: 'tension-thread',
+    section: 'mehanika',
+    class: 9,
+    title: 'Сила натяжения нити',
+    formula: 'T = m·(g − a)',
+    inputs: [
+      { key: 'm', label: 'Масса m', unit: 'кг' },
+      { key: 'a', label: 'Ускорение a', unit: 'м/с²' }
+    ],
+    calc: (x) => x.m * (9.8 - x.a),
+    resultLabel: 'T',
+    resultUnit: 'Н'
+  },
+
+  // =====================> ДВИЖЕНИЕ ПО ОКРУЖНОСТИ (расширение)
+  {
+    id: 'angular-acceleration',
+    section: 'mehanika',
+    class: 10,
+    title: 'Угловое ускорение',
+    formula: 'ε = (ω − ω₀) / t',
+    inputs: [
+      { key: 'w', label: 'Конечная ω', unit: 'рад/с' },
+      { key: 'w0', label: 'Начальная ω₀', unit: 'рад/с' },
+      { key: 't', label: 'Время t', unit: 'с' }
+    ],
+    calc: (x) => (x.w - x.w0) / x.t,
+    resultLabel: 'ε',
+    resultUnit: 'рад/с²'
+  },
+  {
+    id: 'angular-path',
+    section: 'mehanika',
+    class: 10,
+    title: 'Угловой путь',
+    formula: 'φ = ω₀·t + ε·t² / 2',
+    inputs: [
+      { key: 'w0', label: 'Начальная ω₀', unit: 'рад/с' },
+      { key: 'eps', label: 'Ускорение ε', unit: 'рад/с²' },
+      { key: 't', label: 'Время t', unit: 'с' }
+    ],
+    calc: (x) => x.w0 * x.t + x.eps * x.t * x.t / 2,
+    resultLabel: 'φ',
+    resultUnit: 'рад'
+  },
+  {
+    id: 'linear-from-angular',
+    section: 'mehanika',
+    class: 9,
+    title: 'Линейная скорость через угловую',
+    formula: 'v = ω·R',
+    inputs: [
+      { key: 'w', label: 'Угловая ω', unit: 'рад/с' },
+      { key: 'r', label: 'Радиус R', unit: 'м' }
+    ],
+    calc: (x) => x.w * x.r,
+    resultLabel: 'v',
+    resultUnit: 'м/с'
+  },
+  {
+    id: 'centripetal-from-angular',
+    section: 'mehanika',
+    class: 9,
+    title: 'Центростремительное через ω',
+    formula: 'a = ω²·R',
+    inputs: [
+      { key: 'w', label: 'Угловая ω', unit: 'рад/с' },
+      { key: 'r', label: 'Радиус R', unit: 'м' }
+    ],
+    calc: (x) => x.w * x.w * x.r,
+    resultLabel: 'a',
+    resultUnit: 'м/с²'
+  },
+
+  // =====================> СЛОЖНОЕ ДВИЖЕНИЕ
+  {
+    id: 'relative-velocity',
+    section: 'mehanika',
+    class: 10,
+    title: 'Относительная скорость',
+    formula: 'v = v₁ + v₂',
+    inputs: [
+      { key: 'v1', label: 'Скорость v₁', unit: 'м/с' },
+      { key: 'v2', label: 'Скорость v₂', unit: 'м/с' }
+    ],
+    calc: (x) => x.v1 + x.v2,
+    resultLabel: 'v',
+    resultUnit: 'м/с'
+  },
+  {
+    id: 'relative-velocity-opposite',
+    section: 'mehanika',
+    class: 10,
+    title: 'Относительная скорость (навстречу)',
+    formula: 'v = v₁ − v₂',
+    inputs: [
+      { key: 'v1', label: 'Скорость v₁', unit: 'м/с' },
+      { key: 'v2', label: 'Скорость v₂', unit: 'м/с' }
+    ],
+    calc: (x) => x.v1 - x.v2,
+    resultLabel: 'v',
+    resultUnit: 'м/с'
+  },
+  {
+    id: 'river-crossing',
+    section: 'mehanika',
+    class: 10,
+    title: 'Переправа через реку',
+    formula: 'v = √(v₁² + v₂²)',
+    inputs: [
+      { key: 'v1', label: 'Скорость лодки v₁', unit: 'м/с' },
+      { key: 'v2', label: 'Скорость течения v₂', unit: 'м/с' }
+    ],
+    calc: (x) => Math.sqrt(x.v1 * x.v1 + x.v2 * x.v2),
+    resultLabel: 'v',
+    resultUnit: 'м/с'
+  },
+
+    // =====================> ТЕРМОДИНАМИКА (расширение)
+  {
+    id: 'heat-balance-equation',
+    section: 'termo',
+    class: 8,
+    title: 'Уравнение теплового баланса',
+    formula: 'Qотд = Qпогл',
+    inputs: [
+      { key: 'c1', label: 'Теплоёмкость c₁', unit: 'Дж/(кг·°C)' },
+      { key: 'm1', label: 'Масса m₁', unit: 'кг' },
+      { key: 't1', label: 'Начальная t₁', unit: '°C' },
+      { key: 'c2', label: 'Теплоёмкость c₂', unit: 'Дж/(кг·°C)' },
+      { key: 'm2', label: 'Масса m₂', unit: 'кг' },
+      { key: 't2', label: 'Начальная t₂', unit: '°C' }
+    ],
+    calc: (x) => (x.c1 * x.m1 * x.t1 + x.c2 * x.m2 * x.t2) / (x.c1 * x.m1 + x.c2 * x.m2),
+    resultLabel: 't',
+    resultUnit: '°C'
+  },
+  {
+    id: 'heat-total-melting',
+    section: 'termo',
+    class: 8,
+    title: 'Теплота при нагреве и плавлении',
+    formula: 'Q = c·m·Δt + λ·m',
+    inputs: [
+      { key: 'c', label: 'Теплоёмкость c', unit: 'Дж/(кг·°C)' },
+      { key: 'm', label: 'Масса m', unit: 'кг' },
+      { key: 'dt', label: 'ΔТемпература Δt', unit: '°C' },
+      { key: 'lambda', label: 'λ (плавление)', unit: 'Дж/кг' }
+    ],
+    calc: (x) => x.c * x.m * x.dt + x.lambda * x.m,
+    resultLabel: 'Q',
+    resultUnit: 'Дж'
+  },
+  {
+    id: 'heat-total-vaporization',
+    section: 'termo',
+    class: 8,
+    title: 'Теплота при нагреве и кипении',
+    formula: 'Q = c·m·Δt + L·m',
+    inputs: [
+      { key: 'c', label: 'Теплоёмкость c', unit: 'Дж/(кг·°C)' },
+      { key: 'm', label: 'Масса m', unit: 'кг' },
+      { key: 'dt', label: 'ΔТемпература Δt', unit: '°C' },
+      { key: 'l', label: 'L (парообраз.)', unit: 'Дж/кг' }
+    ],
+    calc: (x) => x.c * x.m * x.dt + x.l * x.m,
+    resultLabel: 'Q',
+    resultUnit: 'Дж'
+  },
+  {
+    id: 'efficiency-real-engine',
+    section: 'termo',
+    class: 10,
+    title: 'КПД реального двигателя',
+    formula: 'η = Aполез / Qзатр · 100%',
+    inputs: [
+      { key: 'ap', label: 'Полезная работа Aп', unit: 'Дж' },
+      { key: 'qz', label: 'Затраченная теплота Qз', unit: 'Дж' }
+    ],
+    calc: (x) => x.ap / x.qz * 100,
+    resultLabel: 'η',
+    resultUnit: '%'
+  },
+  {
+    id: 'power-engine',
+    section: 'termo',
+    class: 10,
+    title: 'Мощность двигателя через КПД',
+    formula: 'N = η·Q / (100·t)',
+    inputs: [
+      { key: 'eta', label: 'КПД η', unit: '%' },
+      { key: 'q', label: 'Теплота Q', unit: 'Дж' },
+      { key: 't', label: 'Время t', unit: 'с' }
+    ],
+    calc: (x) => x.eta * x.q / (100 * x.t),
+    resultLabel: 'N',
+    resultUnit: 'Вт'
+  },
+  {
+    id: 'fuel-consumption',
+    section: 'termo',
+    class: 10,
+    title: 'Расход топлива',
+    formula: 'm = Q / (q·η/100)',
+    inputs: [
+      { key: 'q', label: 'Теплота Q', unit: 'Дж' },
+      { key: 'qspec', label: 'Удельная q', unit: 'Дж/кг' },
+      { key: 'eta', label: 'КПД η', unit: '%' }
+    ],
+    calc: (x) => x.q / (x.qspec * x.eta / 100),
+    resultLabel: 'm',
+    resultUnit: 'кг'
+  },
+  {
+    id: 'entropy-change',
+    section: 'termo',
+    class: 10,
+    title: 'Изменение энтропии',
+    formula: 'ΔS = Q / T',
+    inputs: [
+      { key: 'q', label: 'Теплота Q', unit: 'Дж' },
+      { key: 't', label: 'Температура T', unit: 'К' }
+    ],
+    calc: (x) => x.q / x.t,
+    resultLabel: 'ΔS',
+    resultUnit: 'Дж/К'
+  },
+  {
+    id: 'thermal-conductivity',
+    section: 'termo',
+    class: 10,
+    title: 'Теплопроводность (закон Фурье)',
+    formula: 'Q = λ·S·Δt·t / d',
+    inputs: [
+      { key: 'lambda', label: 'Коэф. λ', unit: 'Вт/(м·К)' },
+      { key: 's', label: 'Площадь S', unit: 'м²' },
+      { key: 'dt', label: 'Разность ΔT', unit: 'К' },
+      { key: 't', label: 'Время t', unit: 'с' },
+      { key: 'd', label: 'Толщина d', unit: 'м' }
+    ],
+    calc: (x) => x.lambda * x.s * x.dt * x.t / x.d,
+    resultLabel: 'Q',
+    resultUnit: 'Дж'
+  },
+  {
+    id: 'heat-transfer-coefficient',
+    section: 'termo',
+    class: 10,
+    title: 'Количество теплоты (Ньютон-Рихман)',
+    formula: 'Q = α·S·ΔT·t',
+    inputs: [
+      { key: 'alpha', label: 'Коэф. α', unit: 'Вт/(м²·К)' },
+      { key: 's', label: 'Площадь S', unit: 'м²' },
+      { key: 'dt', label: 'Разность ΔT', unit: 'К' },
+      { key: 't', label: 'Время t', unit: 'с' }
+    ],
+    calc: (x) => x.alpha * x.s * x.dt * x.t,
+    resultLabel: 'Q',
+    resultUnit: 'Дж'
+  },
+  {
+    id: 'radiation-energy',
+    section: 'termo',
+    class: 11,
+    title: 'Энергия теплового излучения (Стефан-Больцман)',
+    formula: 'P = σ·S·T⁴',
+    inputs: [
+      { key: 's', label: 'Площадь S', unit: 'м²' },
+      { key: 't', label: 'Температура T', unit: 'К' }
+    ],
+    calc: (x) => 5.67e-8 * x.s * x.t * x.t * x.t * x.t,
+    resultLabel: 'P',
+    resultUnit: 'Вт'
+  },
+  {
+    id: 'wien-law',
+    section: 'termo',
+    class: 11,
+    title: 'Закон смещения Вина',
+    formula: 'λmax = b / T',
+    inputs: [
+      { key: 't', label: 'Температура T', unit: 'К' }
+    ],
+    calc: (x) => 2.9e-3 / x.t,
+    resultLabel: 'λmax',
+    resultUnit: 'м'
+  },
+  {
+    id: 'relative-humidity-temp',
+    section: 'termo',
+    class: 10,
+    title: 'Относительная влажность через плотность',
+    formula: 'φ = ρ / ρнас · 100%',
+    inputs: [
+      { key: 'rho', label: 'Плотность ρ', unit: 'кг/м³' },
+      { key: 'rho0', label: 'Плотность насыщ. ρ₀', unit: 'кг/м³' }
+    ],
+    calc: (x) => x.rho / x.rho0 * 100,
+    resultLabel: 'φ',
+    resultUnit: '%'
+  },
+  {
+    id: 'dew-point',
+    section: 'termo',
+    class: 10,
+    title: 'Точка росы (приблизительно)',
+    formula: 'tр = t − (100 − φ) / 5',
+    inputs: [
+      { key: 't', label: 'Температура t', unit: '°C' },
+      { key: 'phi', label: 'Влажность φ', unit: '%' }
+    ],
+    calc: (x) => x.t - (100 - x.phi) / 5,
+    resultLabel: 'tр',
+    resultUnit: '°C'
+  },
+  {
+    id: 'saturated-vapor-pressure',
+    section: 'termo',
+    class: 10,
+    title: 'Парциальное давление пара',
+    formula: 'p = φ·pнас / 100',
+    inputs: [
+      { key: 'phi', label: 'Влажность φ', unit: '%' },
+      { key: 'p0', label: 'Давление насыщ. p₀', unit: 'Па' }
+    ],
+    calc: (x) => x.phi * x.p0 / 100,
+    resultLabel: 'p',
+    resultUnit: 'Па'
+  },
+  {
+    id: 'van-der-waals',
+    section: 'termo',
+    class: 10,
+    title: 'Уравнение Ван-дер-Ваальса',
+    formula: '(p + a/V²)(V − b) = RT',
+    inputs: [
+      { key: 't', label: 'Температура T', unit: 'К' },
+      { key: 'v', label: 'Объём V', unit: 'м³' },
+      { key: 'a', label: 'Постоянная a', unit: 'Па·м⁶' },
+      { key: 'b', label: 'Постоянная b', unit: 'м³' }
+    ],
+    calc: (x) => 8.31 * x.t / (x.v - x.b) - x.a / (x.v * x.v),
+    resultLabel: 'p',
+    resultUnit: 'Па'
+  },
+  {
+    id: 'mean-free-path',
+    section: 'termo',
+    class: 10,
+    title: 'Средняя длина свободного пробега',
+    formula: 'λ = 1 / (√2·π·d²·n)',
+    inputs: [
+      { key: 'd', label: 'Диаметр d', unit: 'м' },
+      { key: 'n', label: 'Концентрация n', unit: '1/м³' }
+    ],
+    calc: (x) => 1 / (Math.sqrt(2) * Math.PI * x.d * x.d * x.n),
+    resultLabel: 'λ',
+    resultUnit: 'м'
+  },
+  {
+    id: 'ideal-gas-concentration',
+    section: 'termo',
+    class: 10,
+    title: 'Концентрация молекул газа',
+    formula: 'n = N / V',
+    inputs: [
+      { key: 'n', label: 'Число молекул N', unit: '' },
+      { key: 'v', label: 'Объём V', unit: 'м³' }
+    ],
+    calc: (x) => x.n / x.v,
+    resultLabel: 'n',
+    resultUnit: '1/м³'
+  },
+  {
+    id: 'average-kinetic-energy',
+    section: 'termo',
+    class: 10,
+    title: 'Средняя кинетическая энергия молекулы',
+    formula: 'Ek = (3/2)·k·T',
+    inputs: [
+      { key: 't', label: 'Температура T', unit: 'К' }
+    ],
+    calc: (x) => 1.5 * 1.38e-23 * x.t,
+    resultLabel: 'Ek',
+    resultUnit: 'Дж'
+  },
+  {
+    id: 'rms-speed',
+    section: 'termo',
+    class: 10,
+    title: 'Средняя квадратичная скорость',
+    formula: 'v = √(3·k·T / m)',
+    inputs: [
+      { key: 't', label: 'Температура T', unit: 'К' },
+      { key: 'm', label: 'Масса молекулы m', unit: 'кг' }
+    ],
+    calc: (x) => Math.sqrt(3 * 1.38e-23 * x.t / x.m),
+    resultLabel: 'v',
+    resultUnit: 'м/с'
+  },
+  {
+    id: 'internal-energy-mono',
+    section: 'termo',
+    class: 10,
+    title: 'Внутренняя энергия одноатомного газа',
+    formula: 'U = (3/2)·ν·R·T',
+    inputs: [
+      { key: 'nu', label: 'Количество ν', unit: 'моль' },
+      { key: 't', label: 'Температура T', unit: 'К' }
+    ],
+    calc: (x) => 1.5 * x.nu * 8.31 * x.t,
+    resultLabel: 'U',
+    resultUnit: 'Дж'
+  },
+  {
+    id: 'internal-energy-di',
+    section: 'termo',
+    class: 10,
+    title: 'Внутренняя энергия двухатомного газа',
+    formula: 'U = (5/2)·ν·R·T',
+    inputs: [
+      { key: 'nu', label: 'Количество ν', unit: 'моль' },
+      { key: 't', label: 'Температура T', unit: 'К' }
+    ],
+    calc: (x) => 2.5 * x.nu * 8.31 * x.t,
+    resultLabel: 'U',
+    resultUnit: 'Дж'
+  },
+  {
+    id: 'adiabatic-work',
+    section: 'termo',
+    class: 10,
+    title: 'Работа при адиабатном процессе',
+    formula: 'A = −ΔU',
+    inputs: [
+      { key: 'du', label: 'Изменение ΔU', unit: 'Дж' }
+    ],
+    calc: (x) => -x.du,
+    resultLabel: 'A',
+    resultUnit: 'Дж'
+  },
+  {
+    id: 'heat-engine-work',
+    section: 'termo',
+    class: 10,
+    title: 'Работа теплового двигателя через КПД',
+    formula: 'A = η·Q / 100',
+    inputs: [
+      { key: 'eta', label: 'КПД η', unit: '%' },
+      { key: 'q', label: 'Теплота Q', unit: 'Дж' }
+    ],
+    calc: (x) => x.eta * x.q / 100,
+    resultLabel: 'A',
+    resultUnit: 'Дж'
   }
 
 ];
