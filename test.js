@@ -300,7 +300,66 @@ const tests = {
   'internal-energy-mono':      { in: { nu: 1, t: 300 },        expected: 3739.5,    tol: 1 },
   'internal-energy-di':        { in: { nu: 1, t: 300 },        expected: 6232.5,    tol: 1 },
   'adiabatic-work':            { in: { du: 500 },              expected: -500,      tol: 0.01 },
-  'heat-engine-work':          { in: { eta: 30, q: 1000 },     expected: 300,       tol: 0.01 }
+  'heat-engine-work':          { in: { eta: 30, q: 1000 },     expected: 300,       tol: 0.01 },
+
+    // === Расширение Электричества ===
+  'ac-effective-voltage':    { in: { u0: 311 },                 expected: 219.9,     tol: 0.5  },
+  'ac-effective-current':    { in: { i0: 10 },                  expected: 7.07,      tol: 0.01 },
+  'ac-amplitude-from-effective': { in: { ud: 220 },             expected: 311.13,    tol: 0.5  },
+  'capacitive-reactance':    { in: { w: 314, c: 1e-6 },         expected: 3184.7,    tol: 1    },
+  'inductive-reactance':     { in: { w: 314, l: 0.1 },          expected: 31.4,      tol: 0.1  },
+  'impedance-rc':            { in: { r: 3, xc: 4 },             expected: 5,         tol: 0.01 },
+  'impedance-rl':            { in: { r: 3, xl: 4 },             expected: 5,         tol: 0.01 },
+  'impedance-rlc':           { in: { r: 3, xl: 4, xc: 0 },      expected: 5,         tol: 0.01 },
+  'ac-ohm-law':              { in: { ud: 220, z: 100 },         expected: 2.2,       tol: 0.01 },
+  'ac-power':                { in: { ud: 220, id: 2, phi: 0 },  expected: 440,       tol: 0.5  },
+  'thomson-formula':         { in: { l: 0.1, c: 1e-6 },         expected: 0.001987,  tol: 1e-5 },
+  'lc-frequency':            { in: { l: 0.1, c: 1e-6 },         expected: 503.3,     tol: 1    },
+  'resonance-frequency':     { in: { l: 0.1, c: 1e-6 },         expected: 3162.3,    tol: 1    },
+  'faraday-electrolysis':    { in: { k: 3e-7, i: 2, t: 3600 },  expected: 0.00216,   tol: 1e-5 },
+  'electrochemical-equivalent': { in: { m: 0.0635, n: 2 },      expected: 3.29e-7,   tol: 1e-8 },
+  'charge-through-electrolysis': { in: { i: 2, t: 3600 },       expected: 7200,      tol: 1    },
+  'semiconductor-resistance-temp': { in: { r0: 100, b: 3000, t: 300 }, expected: 2202646, tol: 100 },
+  'metal-resistance-temp':   { in: { r0: 100, alpha: 0.004, dt: 50 }, expected: 120, tol: 0.5 },
+  'ionization-energy-ev':    { in: { u: 13.6 },                 expected: 2.176e-18, tol: 1e-19 },
+  'current-density':         { in: { i: 10, s: 0.001 },         expected: 10000,     tol: 1    },
+  'electron-drift-speed':    { in: { i: 10, n: 1e29, s: 0.001 }, expected: 6.25e-7, tol: 1e-8 },
+
+    // === Астрономия ===
+  'kepler-third-law':        { in: { t1: 1, a1: 1, a2: 4 },    expected: 8,         tol: 0.01 },
+  'first-cosmic-speed':      { in: { g: 9.8, r: 6.4e6 },       expected: 7919,      tol: 10 },
+  'second-cosmic-speed':     { in: { g: 9.8, r: 6.4e6 },       expected: 11200,     tol: 20 },
+  'orbital-period':          { in: { r: 7e6, m: 6e24 },        expected: 5824,      tol: 50 },
+  'parsec':                  { in: { ly: 3.26 },               expected: 1,         tol: 0.01 },
+  'light-year':              { in: { years: 1 },               expected: 9.461e15,  tol: 1e13 },
+  'hubble-law':              { in: { h: 70, r: 100 },          expected: 7000,      tol: 1 },
+  'luminosity':              { in: { r: 7e8, t: 5800 },        expected: 3.95e26,   tol: 1e24 },
+  'solar-mass-loss':         { in: { e: 3.8e26 },              expected: 4.2e9,     tol: 1e8 },
+  'escape-velocity-from-sun': { in: { m: 2e30, r: 7e8 },       expected: 436000,    tol: 5000 },
+
+    // === Расширение Оптики ===
+  'polarization-malus':      { in: { i0: 100, a: 0 },          expected: 100,       tol: 0.01 },
+  'brewster-angle':          { in: { n1: 1, n2: 1.5 },         expected: 56.31,     tol: 0.1  },
+  'path-difference':         { in: { n: 1.5, d: 2e-6 },        expected: 3e-6,      tol: 1e-8 },
+  'thin-film-max':           { in: { n: 1.5, k: 1, lambda: 6e-7 }, expected: 2e-7,   tol: 1e-9 },
+  'thin-film-min':           { in: { n: 1.5, k: 0, lambda: 6e-7 }, expected: 1e-7,   tol: 1e-9 },
+  'grating-resolution':      { in: { k: 2, n: 1000 },          expected: 2000,      tol: 0.01 },
+  'microscope-magnification': { in: { gob: 100, gok: 10 },     expected: 1000,      tol: 0.01 },
+  'telescope-magnification': { in: { fob: 2, fok: 0.05 },      expected: 40,        tol: 0.01 },
+  'energy-illumination':     { in: { i: 100, r: 5 },           expected: 4,         tol: 0.01 },
+  'diffraction-condition':   { in: { d: 1e-5, k: 1, lambda: 5e-7 }, expected: 2.87,  tol: 0.1  },
+
+    // === Расширение Атомной ===
+  'nuclear-fission-energy':  { in: { dm: 0.2 },                 expected: 186.3,     tol: 0.5  },
+  'nuclear-fusion-energy':   { in: { m1: 5.03, m2: 5.01 },      expected: 18.63,     tol: 0.5  },
+  'mass-number':             { in: { z: 6, n: 6 },              expected: 12,        tol: 0.01 },
+  'neutron-number':          { in: { a: 12, z: 6 },             expected: 6,         tol: 0.01 },
+  'specific-activity':       { in: { a: 1000, m: 2 },           expected: 500,       tol: 0.01 },
+  'absorbed-dose':           { in: { e: 10, m: 2 },             expected: 5,         tol: 0.01 },
+  'equivalent-dose':         { in: { d: 5, k: 20 },             expected: 100,       tol: 0.01 },
+  'activity-mass':           { in: { lambda: 0.1, m: 0.001, M: 0.001 }, expected: 6.02e22, tol: 1e20 },
+  'number-of-atoms':         { in: { m: 0.001, M: 0.001 },      expected: 6.02e23,   tol: 1e21 },
+  'decay-time':              { in: { t: 10, n0: 1000, n: 125 }, expected: 30,        tol: 0.01 }
 };
 
 // Прогон

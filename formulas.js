@@ -3798,6 +3798,732 @@ const formulas = [
     calc: (x) => x.eta * x.q / 100,
     resultLabel: 'A',
     resultUnit: 'Дж'
+  },
+
+    // =====================> ЭЛЕКТРИЧЕСТВО (расширение)
+  {
+    id: 'ac-effective-voltage',
+    section: 'electro',
+    class: 11,
+    title: 'Действующее значение напряжения',
+    formula: 'Uд = U₀ / √2',
+    inputs: [
+      { key: 'u0', label: 'Амплитуда U₀', unit: 'В' }
+    ],
+    calc: (x) => x.u0 / Math.sqrt(2),
+    resultLabel: 'Uд',
+    resultUnit: 'В'
+  },
+  {
+    id: 'ac-effective-current',
+    section: 'electro',
+    class: 11,
+    title: 'Действующее значение тока',
+    formula: 'Iд = I₀ / √2',
+    inputs: [
+      { key: 'i0', label: 'Амплитуда I₀', unit: 'А' }
+    ],
+    calc: (x) => x.i0 / Math.sqrt(2),
+    resultLabel: 'Iд',
+    resultUnit: 'А'
+  },
+  {
+    id: 'ac-amplitude-from-effective',
+    section: 'electro',
+    class: 11,
+    title: 'Амплитуда через действующее значение',
+    formula: 'U₀ = Uд · √2',
+    inputs: [
+      { key: 'ud', label: 'Действующее Uд', unit: 'В' }
+    ],
+    calc: (x) => x.ud * Math.sqrt(2),
+    resultLabel: 'U₀',
+    resultUnit: 'В'
+  },
+  {
+    id: 'capacitive-reactance',
+    section: 'electro',
+    class: 11,
+    title: 'Ёмкостное сопротивление',
+    formula: 'Xc = 1 / (ω·C)',
+    inputs: [
+      { key: 'w', label: 'Частота ω', unit: 'рад/с' },
+      { key: 'c', label: 'Ёмкость C', unit: 'Ф' }
+    ],
+    calc: (x) => 1 / (x.w * x.c),
+    resultLabel: 'Xc',
+    resultUnit: 'Ом'
+  },
+  {
+    id: 'inductive-reactance',
+    section: 'electro',
+    class: 11,
+    title: 'Индуктивное сопротивление',
+    formula: 'Xl = ω·L',
+    inputs: [
+      { key: 'w', label: 'Частота ω', unit: 'рад/с' },
+      { key: 'l', label: 'Индуктивность L', unit: 'Гн' }
+    ],
+    calc: (x) => x.w * x.l,
+    resultLabel: 'Xl',
+    resultUnit: 'Ом'
+  },
+  {
+    id: 'impedance-rc',
+    section: 'electro',
+    class: 11,
+    title: 'Полное сопротивление (RC)',
+    formula: 'Z = √(R² + Xc²)',
+    inputs: [
+      { key: 'r', label: 'Сопротивление R', unit: 'Ом' },
+      { key: 'xc', label: 'Ёмкостное Xc', unit: 'Ом' }
+    ],
+    calc: (x) => Math.sqrt(x.r * x.r + x.xc * x.xc),
+    resultLabel: 'Z',
+    resultUnit: 'Ом'
+  },
+  {
+    id: 'impedance-rl',
+    section: 'electro',
+    class: 11,
+    title: 'Полное сопротивление (RL)',
+    formula: 'Z = √(R² + Xl²)',
+    inputs: [
+      { key: 'r', label: 'Сопротивление R', unit: 'Ом' },
+      { key: 'xl', label: 'Индуктивное Xl', unit: 'Ом' }
+    ],
+    calc: (x) => Math.sqrt(x.r * x.r + x.xl * x.xl),
+    resultLabel: 'Z',
+    resultUnit: 'Ом'
+  },
+  {
+    id: 'impedance-rlc',
+    section: 'electro',
+    class: 11,
+    title: 'Полное сопротивление (RLC)',
+    formula: 'Z = √(R² + (Xl − Xc)²)',
+    inputs: [
+      { key: 'r', label: 'Сопротивление R', unit: 'Ом' },
+      { key: 'xl', label: 'Индуктивное Xl', unit: 'Ом' },
+      { key: 'xc', label: 'Ёмкостное Xc', unit: 'Ом' }
+    ],
+    calc: (x) => Math.sqrt(x.r * x.r + (x.xl - x.xc) * (x.xl - x.xc)),
+    resultLabel: 'Z',
+    resultUnit: 'Ом'
+  },
+  {
+    id: 'ac-ohm-law',
+    section: 'electro',
+    class: 11,
+    title: 'Закон Ома для переменного тока',
+    formula: 'Iд = Uд / Z',
+    inputs: [
+      { key: 'ud', label: 'Напряжение Uд', unit: 'В' },
+      { key: 'z', label: 'Сопротивление Z', unit: 'Ом' }
+    ],
+    calc: (x) => x.ud / x.z,
+    resultLabel: 'Iд',
+    resultUnit: 'А'
+  },
+  {
+    id: 'ac-power',
+    section: 'electro',
+    class: 11,
+    title: 'Мощность переменного тока',
+    formula: 'P = Uд·Iд·cos φ',
+    inputs: [
+      { key: 'ud', label: 'Напряжение Uд', unit: 'В' },
+      { key: 'id', label: 'Ток Iд', unit: 'А' },
+      { key: 'phi', label: 'Сдвиг φ', unit: '°' }
+    ],
+    calc: (x) => x.ud * x.id * Math.cos(x.phi * Math.PI / 180),
+    resultLabel: 'P',
+    resultUnit: 'Вт'
+  },
+  {
+    id: 'thomson-formula',
+    section: 'electro',
+    class: 11,
+    title: 'Формула Томсона (период LC)',
+    formula: 'T = 2π·√(L·C)',
+    inputs: [
+      { key: 'l', label: 'Индуктивность L', unit: 'Гн' },
+      { key: 'c', label: 'Ёмкость C', unit: 'Ф' }
+    ],
+    calc: (x) => 2 * Math.PI * Math.sqrt(x.l * x.c),
+    resultLabel: 'T',
+    resultUnit: 'с'
+  },
+  {
+    id: 'lc-frequency',
+    section: 'electro',
+    class: 11,
+    title: 'Частота колебательного контура',
+    formula: 'ν = 1 / (2π·√(L·C))',
+    inputs: [
+      { key: 'l', label: 'Индуктивность L', unit: 'Гн' },
+      { key: 'c', label: 'Ёмкость C', unit: 'Ф' }
+    ],
+    calc: (x) => 1 / (2 * Math.PI * Math.sqrt(x.l * x.c)),
+    resultLabel: 'ν',
+    resultUnit: 'Гц'
+  },
+  {
+    id: 'resonance-frequency',
+    section: 'electro',
+    class: 11,
+    title: 'Резонансная частота',
+    formula: 'ω₀ = 1 / √(L·C)',
+    inputs: [
+      { key: 'l', label: 'Индуктивность L', unit: 'Гн' },
+      { key: 'c', label: 'Ёмкость C', unit: 'Ф' }
+    ],
+    calc: (x) => 1 / Math.sqrt(x.l * x.c),
+    resultLabel: 'ω₀',
+    resultUnit: 'рад/с'
+  },
+  {
+    id: 'faraday-electrolysis',
+    section: 'electro',
+    class: 10,
+    title: 'Первый закон Фарадея (электролиз)',
+    formula: 'm = k · I · t',
+    inputs: [
+      { key: 'k', label: 'Электрохим. эквивалент k', unit: 'кг/Кл' },
+      { key: 'i', label: 'Сила тока I', unit: 'А' },
+      { key: 't', label: 'Время t', unit: 'с' }
+    ],
+    calc: (x) => x.k * x.i * x.t,
+    resultLabel: 'm',
+    resultUnit: 'кг'
+  },
+  {
+    id: 'electrochemical-equivalent',
+    section: 'electro',
+    class: 10,
+    title: 'Электрохимический эквивалент',
+    formula: 'k = M / (n·F)',
+    inputs: [
+      { key: 'm', label: 'Молярная масса M', unit: 'кг/моль' },
+      { key: 'n', label: 'Валентность n', unit: '' }
+    ],
+    calc: (x) => x.m / (x.n * 96500),
+    resultLabel: 'k',
+    resultUnit: 'кг/Кл'
+  },
+  {
+    id: 'charge-through-electrolysis',
+    section: 'electro',
+    class: 10,
+    title: 'Заряд при электролизе',
+    formula: 'q = I · t',
+    inputs: [
+      { key: 'i', label: 'Сила тока I', unit: 'А' },
+      { key: 't', label: 'Время t', unit: 'с' }
+    ],
+    calc: (x) => x.i * x.t,
+    resultLabel: 'q',
+    resultUnit: 'Кл'
+  },
+  {
+    id: 'semiconductor-resistance-temp',
+    section: 'electro',
+    class: 11,
+    title: 'Сопротивление полупроводника (зависимость от T)',
+    formula: 'R = R₀·e^(B/T)',
+    inputs: [
+      { key: 'r0', label: 'Сопротивление R₀', unit: 'Ом' },
+      { key: 'b', label: 'Константа B', unit: 'К' },
+      { key: 't', label: 'Температура T', unit: 'К' }
+    ],
+    calc: (x) => x.r0 * Math.exp(x.b / x.t),
+    resultLabel: 'R',
+    resultUnit: 'Ом'
+  },
+  {
+    id: 'metal-resistance-temp',
+    section: 'electro',
+    class: 11,
+    title: 'Сопротивление металла (зависимость от T)',
+    formula: 'R = R₀·(1 + α·ΔT)',
+    inputs: [
+      { key: 'r0', label: 'Сопротивление R₀', unit: 'Ом' },
+      { key: 'alpha', label: 'Коэф. α', unit: '1/К' },
+      { key: 'dt', label: 'Изменение ΔT', unit: 'К' }
+    ],
+    calc: (x) => x.r0 * (1 + x.alpha * x.dt),
+    resultLabel: 'R',
+    resultUnit: 'Ом'
+  },
+  {
+    id: 'ionization-energy-ev',
+    section: 'electro',
+    class: 11,
+    title: 'Энергия ионизации (эВ)',
+    formula: 'W = q·U',
+    inputs: [
+      { key: 'u', label: 'Напряжение U', unit: 'В' }
+    ],
+    calc: (x) => 1.6e-19 * x.u,
+    resultLabel: 'W',
+    resultUnit: 'Дж'
+  },
+  {
+    id: 'current-density',
+    section: 'electro',
+    class: 11,
+    title: 'Плотность тока',
+    formula: 'j = I / S',
+    inputs: [
+      { key: 'i', label: 'Сила тока I', unit: 'А' },
+      { key: 's', label: 'Площадь S', unit: 'м²' }
+    ],
+    calc: (x) => x.i / x.s,
+    resultLabel: 'j',
+    resultUnit: 'А/м²'
+  },
+  {
+    id: 'electron-drift-speed',
+    section: 'electro',
+    class: 11,
+    title: 'Скорость дрейфа электронов',
+    formula: 'v = I / (n·e·S)',
+    inputs: [
+      { key: 'i', label: 'Сила тока I', unit: 'А' },
+      { key: 'n', label: 'Концентрация n', unit: '1/м³' },
+      { key: 's', label: 'Площадь S', unit: 'м²' }
+    ],
+    calc: (x) => x.i / (x.n * 1.6e-19 * x.s),
+    resultLabel: 'v',
+    resultUnit: 'м/с'
+  },
+
+    // =====================> АСТРОНОМИЯ
+  {
+    id: 'kepler-third-law',
+    section: 'astro',
+    class: 11,
+    title: 'Третий закон Кеплера',
+    formula: 'T₁² / T₂² = a₁³ / a₂³',
+    inputs: [
+      { key: 't1', label: 'Период T₁', unit: 'лет' },
+      { key: 'a1', label: 'Большая полуось a₁', unit: 'а.е.' },
+      { key: 'a2', label: 'Большая полуось a₂', unit: 'а.е.' }
+    ],
+    calc: (x) => x.t1 * Math.sqrt(Math.pow(x.a2 / x.a1, 3)),
+    resultLabel: 'T₂',
+    resultUnit: 'лет'
+  },
+  {
+    id: 'first-cosmic-speed',
+    section: 'astro',
+    class: 11,
+    title: 'Первая космическая скорость',
+    formula: 'v₁ = √(g·R)',
+    inputs: [
+      { key: 'g', label: 'Ускорение g', unit: 'м/с²' },
+      { key: 'r', label: 'Радиус планеты R', unit: 'м' }
+    ],
+    calc: (x) => Math.sqrt(x.g * x.r),
+    resultLabel: 'v₁',
+    resultUnit: 'м/с'
+  },
+  {
+    id: 'second-cosmic-speed',
+    section: 'astro',
+    class: 11,
+    title: 'Вторая космическая скорость',
+    formula: 'v₂ = √(2·g·R)',
+    inputs: [
+      { key: 'g', label: 'Ускорение g', unit: 'м/с²' },
+      { key: 'r', label: 'Радиус планеты R', unit: 'м' }
+    ],
+    calc: (x) => Math.sqrt(2 * x.g * x.r),
+    resultLabel: 'v₂',
+    resultUnit: 'м/с'
+  },
+  {
+    id: 'orbital-period',
+    section: 'astro',
+    class: 11,
+    title: 'Период обращения спутника',
+    formula: 'T = 2π·√(R³ / (G·M))',
+    inputs: [
+      { key: 'r', label: 'Радиус орбиты R', unit: 'м' },
+      { key: 'm', label: 'Масса планеты M', unit: 'кг' }
+    ],
+    calc: (x) => 2 * Math.PI * Math.sqrt(Math.pow(x.r, 3) / (6.67e-11 * x.m)),
+    resultLabel: 'T',
+    resultUnit: 'с'
+  },
+  {
+    id: 'parsec',
+    section: 'astro',
+    class: 11,
+    title: 'Парсек (расстояние)',
+    formula: '1 пк = 3.26 св. лет',
+    inputs: [
+      { key: 'ly', label: 'Световых лет', unit: 'св.лет' }
+    ],
+    calc: (x) => x.ly / 3.26,
+    resultLabel: 'Парсек',
+    resultUnit: 'пк'
+  },
+  {
+    id: 'light-year',
+    section: 'astro',
+    class: 11,
+    title: 'Световой год',
+    formula: '1 св. год = c · t',
+    inputs: [
+      { key: 'years', label: 'Лет', unit: 'лет' }
+    ],
+    calc: (x) => x.years * 9.461e15,
+    resultLabel: 'Расстояние',
+    resultUnit: 'м'
+  },
+  {
+    id: 'hubble-law',
+    section: 'astro',
+    class: 11,
+    title: 'Закон Хаббла',
+    formula: 'v = H·r',
+    inputs: [
+      { key: 'h', label: 'Постоянная Хаббла H', unit: 'км/(с·Мпк)' },
+      { key: 'r', label: 'Расстояние r', unit: 'Мпк' }
+    ],
+    calc: (x) => x.h * x.r,
+    resultLabel: 'v',
+    resultUnit: 'км/с'
+  },
+  {
+    id: 'luminosity',
+    section: 'astro',
+    class: 11,
+    title: 'Светимость звезды',
+    formula: 'L = 4π·R²·σ·T⁴',
+    inputs: [
+      { key: 'r', label: 'Радиус R', unit: 'м' },
+      { key: 't', label: 'Температура T', unit: 'К' }
+    ],
+    calc: (x) => 4 * Math.PI * x.r * x.r * 5.67e-8 * Math.pow(x.t, 4),
+    resultLabel: 'L',
+    resultUnit: 'Вт'
+  },
+  {
+    id: 'solar-mass-loss',
+    section: 'astro',
+    class: 11,
+    title: 'Потеря массы Солнца',
+    formula: 'Δm = E / c²',
+    inputs: [
+      { key: 'e', label: 'Энергия E', unit: 'Дж' }
+    ],
+    calc: (x) => x.e / 9e16,
+    resultLabel: 'Δm',
+    resultUnit: 'кг'
+  },
+  {
+    id: 'escape-velocity-from-sun',
+    section: 'astro',
+    class: 11,
+    title: 'Скорость ухода с орбиты',
+    formula: 'v = √(G·M / R)',
+    inputs: [
+      { key: 'm', label: 'Масса M', unit: 'кг' },
+      { key: 'r', label: 'Радиус R', unit: 'м' }
+    ],
+    calc: (x) => Math.sqrt(6.67e-11 * x.m / x.r),
+    resultLabel: 'v',
+    resultUnit: 'м/с'
+  },
+
+    // =====================> ОПТИКА (расширение)
+  {
+    id: 'polarization-malus',
+    section: 'optika',
+    class: 11,
+    title: 'Закон Малюса (поляризация)',
+    formula: 'I = I₀·cos² α',
+    inputs: [
+      { key: 'i0', label: 'Интенсивность I₀', unit: 'Вт/м²' },
+      { key: 'a', label: 'Угол α', unit: '°' }
+    ],
+    calc: (x) => x.i0 * Math.pow(Math.cos(x.a * Math.PI / 180), 2),
+    resultLabel: 'I',
+    resultUnit: 'Вт/м²'
+  },
+  {
+    id: 'brewster-angle',
+    section: 'optika',
+    class: 11,
+    title: 'Угол Брюстера',
+    formula: 'tg θ = n₂ / n₁',
+    inputs: [
+      { key: 'n1', label: 'n₁', unit: '' },
+      { key: 'n2', label: 'n₂', unit: '' }
+    ],
+    calc: (x) => Math.atan(x.n2 / x.n1) * 180 / Math.PI,
+    resultLabel: 'θ',
+    resultUnit: '°'
+  },
+  {
+    id: 'path-difference',
+    section: 'optika',
+    class: 11,
+    title: 'Оптическая разность хода',
+    formula: 'Δ = n·d',
+    inputs: [
+      { key: 'n', label: 'Показатель n', unit: '' },
+      { key: 'd', label: 'Толщина d', unit: 'м' }
+    ],
+    calc: (x) => x.n * x.d,
+    resultLabel: 'Δ',
+    resultUnit: 'м'
+  },
+  {
+    id: 'thin-film-max',
+    section: 'optika',
+    class: 11,
+    title: 'Максимум в тонкой плёнке',
+    formula: '2·n·d = k·λ',
+    inputs: [
+      { key: 'n', label: 'Показатель n', unit: '' },
+      { key: 'k', label: 'Порядок k', unit: '' },
+      { key: 'lambda', label: 'Длина волны λ', unit: 'м' }
+    ],
+    calc: (x) => x.k * x.lambda / (2 * x.n),
+    resultLabel: 'd',
+    resultUnit: 'м'
+  },
+  {
+    id: 'thin-film-min',
+    section: 'optika',
+    class: 11,
+    title: 'Минимум в тонкой плёнке',
+    formula: '2·n·d = (2k+1)·λ / 2',
+    inputs: [
+      { key: 'n', label: 'Показатель n', unit: '' },
+      { key: 'k', label: 'Порядок k', unit: '' },
+      { key: 'lambda', label: 'Длина волны λ', unit: 'м' }
+    ],
+    calc: (x) => (2 * x.k + 1) * x.lambda / (4 * x.n),
+    resultLabel: 'd',
+    resultUnit: 'м'
+  },
+  {
+    id: 'grating-resolution',
+    section: 'optika',
+    class: 11,
+    title: 'Разрешающая способность решётки',
+    formula: 'R = k·N',
+    inputs: [
+      { key: 'k', label: 'Порядок k', unit: '' },
+      { key: 'n', label: 'Число штрихов N', unit: '' }
+    ],
+    calc: (x) => x.k * x.n,
+    resultLabel: 'R',
+    resultUnit: ''
+  },
+  {
+    id: 'microscope-magnification',
+    section: 'optika',
+    class: 11,
+    title: 'Увеличение микроскопа',
+    formula: 'Γ = Γоб · Γок',
+    inputs: [
+      { key: 'gob', label: 'Увеличение объектива', unit: '' },
+      { key: 'gok', label: 'Увеличение окуляра', unit: '' }
+    ],
+    calc: (x) => x.gob * x.gok,
+    resultLabel: 'Γ',
+    resultUnit: ''
+  },
+  {
+    id: 'telescope-magnification',
+    section: 'optika',
+    class: 11,
+    title: 'Увеличение телескопа',
+    formula: 'Γ = Fоб / Fок',
+    inputs: [
+      { key: 'fob', label: 'Фокус объектива', unit: 'м' },
+      { key: 'fok', label: 'Фокус окуляра', unit: 'м' }
+    ],
+    calc: (x) => x.fob / x.fok,
+    resultLabel: 'Γ',
+    resultUnit: ''
+  },
+  {
+    id: 'energy-illumination',
+    section: 'optika',
+    class: 11,
+    title: 'Освещённость',
+    formula: 'E = I / R²',
+    inputs: [
+      { key: 'i', label: 'Сила света I', unit: 'кд' },
+      { key: 'r', label: 'Расстояние R', unit: 'м' }
+    ],
+    calc: (x) => x.i / (x.r * x.r),
+    resultLabel: 'E',
+    resultUnit: 'лк'
+  },
+  {
+    id: 'diffraction-condition',
+    section: 'optika',
+    class: 11,
+    title: 'Условие дифракции',
+    formula: 'd·sin φ = k·λ',
+    inputs: [
+      { key: 'd', label: 'Период d', unit: 'м' },
+      { key: 'k', label: 'Порядок k', unit: '' },
+      { key: 'lambda', label: 'Длина λ', unit: 'м' }
+    ],
+    calc: (x) => Math.asin(x.k * x.lambda / x.d) * 180 / Math.PI,
+    resultLabel: 'φ',
+    resultUnit: '°'
+  },
+
+    // =====================> АТОМНАЯ (расширение)
+  {
+    id: 'nuclear-fission-energy',
+    section: 'atom',
+    class: 11,
+    title: 'Энергия деления ядра',
+    formula: 'E = Δm · c²',
+    inputs: [
+      { key: 'dm', label: 'Дефект массы Δm', unit: 'а.е.м.' }
+    ],
+    calc: (x) => x.dm * 931.5,
+    resultLabel: 'E',
+    resultUnit: 'МэВ'
+  },
+  {
+    id: 'nuclear-fusion-energy',
+    section: 'atom',
+    class: 11,
+    title: 'Энергия термоядерного синтеза',
+    formula: 'Q = (Σmнач − Σmкон) · c²',
+    inputs: [
+      { key: 'm1', label: 'Масса до', unit: 'а.е.м.' },
+      { key: 'm2', label: 'Масса после', unit: 'а.е.м.' }
+    ],
+    calc: (x) => (x.m1 - x.m2) * 931.5,
+    resultLabel: 'Q',
+    resultUnit: 'МэВ'
+  },
+  {
+    id: 'mass-number',
+    section: 'atom',
+    class: 11,
+    title: 'Массовое число',
+    formula: 'A = Z + N',
+    inputs: [
+      { key: 'z', label: 'Протоны Z', unit: '' },
+      { key: 'n', label: 'Нейтроны N', unit: '' }
+    ],
+    calc: (x) => x.z + x.n,
+    resultLabel: 'A',
+    resultUnit: ''
+  },
+  {
+    id: 'neutron-number',
+    section: 'atom',
+    class: 11,
+    title: 'Число нейтронов',
+    formula: 'N = A − Z',
+    inputs: [
+      { key: 'a', label: 'Массовое число A', unit: '' },
+      { key: 'z', label: 'Протоны Z', unit: '' }
+    ],
+    calc: (x) => x.a - x.z,
+    resultLabel: 'N',
+    resultUnit: ''
+  },
+  {
+    id: 'specific-activity',
+    section: 'atom',
+    class: 11,
+    title: 'Удельная активность',
+    formula: 'a = A / m',
+    inputs: [
+      { key: 'a', label: 'Активность A', unit: 'Бк' },
+      { key: 'm', label: 'Масса m', unit: 'кг' }
+    ],
+    calc: (x) => x.a / x.m,
+    resultLabel: 'a',
+    resultUnit: 'Бк/кг'
+  },
+  {
+    id: 'absorbed-dose',
+    section: 'atom',
+    class: 11,
+    title: 'Поглощённая доза излучения',
+    formula: 'D = E / m',
+    inputs: [
+      { key: 'e', label: 'Энергия E', unit: 'Дж' },
+      { key: 'm', label: 'Масса m', unit: 'кг' }
+    ],
+    calc: (x) => x.e / x.m,
+    resultLabel: 'D',
+    resultUnit: 'Гр'
+  },
+  {
+    id: 'equivalent-dose',
+    section: 'atom',
+    class: 11,
+    title: 'Эквивалентная доза',
+    formula: 'H = D · k',
+    inputs: [
+      { key: 'd', label: 'Поглощённая D', unit: 'Гр' },
+      { key: 'k', label: 'Коэф. k', unit: '' }
+    ],
+    calc: (x) => x.d * x.k,
+    resultLabel: 'H',
+    resultUnit: 'Зв'
+  },
+  {
+    id: 'activity-mass',
+    section: 'atom',
+    class: 11,
+    title: 'Активность через массу',
+    formula: 'A = λ·N = λ·m·Nа / M',
+    inputs: [
+      { key: 'lambda', label: 'Постоянная λ', unit: '1/с' },
+      { key: 'm', label: 'Масса m', unit: 'кг' },
+      { key: 'M', label: 'Молярная масса', unit: 'кг/моль' }
+    ],
+    calc: (x) => x.lambda * x.m * 6.02e23 / x.M,
+    resultLabel: 'A',
+    resultUnit: 'Бк'
+  },
+  {
+    id: 'number-of-atoms',
+    section: 'atom',
+    class: 11,
+    title: 'Число атомов через массу',
+    formula: 'N = m·Nа / M',
+    inputs: [
+      { key: 'm', label: 'Масса m', unit: 'кг' },
+      { key: 'M', label: 'Молярная масса', unit: 'кг/моль' }
+    ],
+    calc: (x) => x.m * 6.02e23 / x.M,
+    resultLabel: 'N',
+    resultUnit: ''
+  },
+  {
+    id: 'decay-time',
+    section: 'atom',
+    class: 11,
+    title: 'Время распада через N',
+    formula: 't = T·log₂(N₀ / N)',
+    inputs: [
+      { key: 't', label: 'Период T', unit: 'с' },
+      { key: 'n0', label: 'Начальное N₀', unit: '' },
+      { key: 'n', label: 'Конечное N', unit: '' }
+    ],
+    calc: (x) => x.t * Math.log2(x.n0 / x.n),
+    resultLabel: 't',
+    resultUnit: 'с'
   }
 
 ];
