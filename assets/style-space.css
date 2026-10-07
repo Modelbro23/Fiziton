@@ -1,0 +1,614 @@
+/* ============ КОСМИЧЕСКАЯ ТЕМА «ФИЗИТОН» ============ */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Основные цвета — извлечены из ваших аниме-PNG */
+  --bg: #0d0a1a;
+  --bg-deep: #07040f;
+  --surface: #1a1033;
+  --surface-hover: #251a44;
+  --border: #332457;
+  --border-bright: #4a3670;
+  --text: #f5ede0;
+  --muted: #9585b5;
+
+  /* Акценты */
+  --gold: #e89b3c;
+  --gold-bright: #ffb84d;
+  --violet: #b57cd9;
+  --pink: #e070a0;
+  --glow-gold: rgba(232, 155, 60, 0.3);
+  --glow-violet: rgba(181, 124, 217, 0.3);
+}
+
+/* ============ ОСНОВА ============ */
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 60px 40px;
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ============ ЗВЁЗДНЫЙ ФОН ============ */
+.stars-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(1px 1px at 20% 30%, #fff, transparent),
+    radial-gradient(1px 1px at 60% 70%, #fff, transparent),
+    radial-gradient(2px 2px at 50% 50%, #e89b3c, transparent),
+    radial-gradient(1px 1px at 80% 10%, #fff, transparent),
+    radial-gradient(1px 1px at 90% 60%, #b57cd9, transparent),
+    radial-gradient(1px 1px at 33% 80%, #fff, transparent),
+    radial-gradient(2px 2px at 15% 90%, #e070a0, transparent),
+    radial-gradient(1px 1px at 70% 30%, #fff, transparent);
+  background-size: 200% 200%;
+  animation: starsMove 120s linear infinite;
+  opacity: 0.6;
+}
+
+@keyframes starsMove {
+  from { background-position: 0 0; }
+  to { background-position: 200% 200%; }
+}
+
+/* Слой туманности */
+body::before {
+  content: '';
+  position: fixed;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background:
+    radial-gradient(circle at 30% 40%, rgba(181, 124, 217, 0.08), transparent 40%),
+    radial-gradient(circle at 70% 60%, rgba(232, 155, 60, 0.06), transparent 40%),
+    radial-gradient(circle at 50% 80%, rgba(224, 112, 160, 0.05), transparent 40%);
+  pointer-events: none;
+  z-index: 0;
+  animation: nebulaMove 60s ease-in-out infinite alternate;
+}
+
+@keyframes nebulaMove {
+  from { transform: translate(0, 0) rotate(0deg); }
+  to   { transform: translate(5%, 5%) rotate(5deg); }
+}
+
+/* Все элементы поверх звёзд */
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============ ШАПКА ============ */
+header {
+  max-width: 1200px;
+  margin: 0 auto 60px;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+}
+
+header h1 {
+  font-size: 72px;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.95;
+  color: var(--text);
+  margin-bottom: 12px;
+  background: linear-gradient(135deg, var(--text) 0%, var(--gold) 60%, var(--violet) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+header h1::after {
+  content: '.';
+  color: var(--gold);
+  -webkit-text-fill-color: var(--gold);
+}
+
+header p {
+  color: var(--muted);
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+/* ============ ГЛАВНАЯ — 2 КАРТОЧКИ ============ */
+.hub {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.hub-card {
+  background: linear-gradient(135deg, var(--surface) 0%, var(--bg-deep) 100%);
+  padding: 50px 45px;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  min-height: 380px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 24px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  box-shadow: 0 0 0 1px transparent, 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* Свечение сверху */
+.hub-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--violet), transparent);
+  opacity: 0.4;
+  transition: opacity 0.3s;
+}
+
+.hub-card:hover::before {
+  opacity: 1;
+}
+
+.hub-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--gold);
+  box-shadow:
+    0 0 0 1px var(--gold),
+    0 0 40px var(--glow-gold),
+    0 30px 80px rgba(0, 0, 0, 0.6);
+}
+
+/* PNG-персонаж в углу карточки */
+.hub-card .char {
+  position: absolute;
+  right: -20px;
+  bottom: -20px;
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
+  object-position: bottom right;
+  opacity: 0.85;
+  transition: all 0.4s ease;
+  pointer-events: none;
+  filter: drop-shadow(0 0 20px rgba(232, 155, 60, 0.3));
+}
+
+.hub-card:hover .char {
+  transform: scale(1.08) translateY(-6px);
+  opacity: 1;
+  filter: drop-shadow(0 0 30px rgba(232, 155, 60, 0.5));
+}
+
+.hub-card .icon {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  z-index: 2;
+  position: relative;
+}
+
+.hub-card h2 {
+  font-size: 44px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin: 40px 0 16px;
+  color: var(--text);
+  z-index: 2;
+  position: relative;
+  text-shadow: 0 0 30px rgba(245, 237, 224, 0.15);
+}
+
+.hub-card p {
+  font-size: 16px;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 60%;
+  z-index: 2;
+  position: relative;
+}
+
+/* ============ ПЛИТКИ РАЗДЕЛОВ ============ */
+.menu {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.card {
+  background: linear-gradient(135deg, var(--surface) 0%, var(--bg-deep) 100%);
+  padding: 32px 30px;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  min-height: 260px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--violet), var(--gold), transparent);
+  opacity: 0.3;
+  transition: opacity 0.3s;
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  border-color: var(--violet);
+  box-shadow:
+    0 0 0 1px var(--violet),
+    0 0 30px var(--glow-violet),
+    0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+/* PNG в углу плитки раздела */
+.card .char {
+  position: absolute;
+  right: -10px;
+  bottom: -10px;
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  object-position: bottom right;
+  opacity: 0.7;
+  transition: all 0.4s ease;
+  pointer-events: none;
+  filter: drop-shadow(0 0 15px rgba(181, 124, 217, 0.3));
+}
+
+.card:hover .char {
+  transform: scale(1.1) translateY(-4px);
+  opacity: 1;
+  filter: drop-shadow(0 0 25px rgba(181, 124, 217, 0.5));
+}
+
+.card .icon {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+  font-weight: 600;
+  text-transform: uppercase;
+  z-index: 2;
+  position: relative;
+}
+
+.card h2 {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+  color: var(--text);
+  z-index: 2;
+  position: relative;
+}
+
+.card p {
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.5;
+  max-width: 60%;
+  z-index: 2;
+  position: relative;
+}
+
+/* ============ КНОПКА "НАЗАД" ============ */
+.back {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: none;
+  margin-bottom: 40px;
+  letter-spacing: 0.05em;
+  transition: all 0.3s;
+  padding: 8px 16px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+}
+
+.back:hover {
+  color: var(--gold);
+  border-color: var(--border);
+  background: var(--surface);
+}
+
+/* ============ КАЛЬКУЛЯТОРЫ ============ */
+.calcs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+  gap: 24px;
+  max-width: 1200px;
+  margin: 0 auto;
+  align-items: stretch;
+  grid-auto-rows: 1fr;
+}
+
+.calc {
+  background: linear-gradient(160deg, var(--surface) 0%, var(--bg-deep) 100%);
+  padding: 32px;
+  border-radius: 20px;
+  border: 1px solid var(--border);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  min-height: 420px;
+  position: relative;
+  overflow: hidden;
+}
+
+.calc::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  opacity: 0.3;
+  transition: opacity 0.3s;
+}
+
+.calc:hover {
+  border-color: var(--gold);
+  box-shadow:
+    0 0 0 1px var(--gold),
+    0 0 30px var(--glow-gold),
+    0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.calc:hover::before {
+  opacity: 1;
+}
+
+.calc h2 {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 16px;
+  color: var(--text);
+  min-height: 56px;
+  display: flex;
+  align-items: flex-start;
+}
+
+.formula {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  color: var(--gold);
+  margin-bottom: 24px;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, rgba(232, 155, 60, 0.08), rgba(181, 124, 217, 0.05));
+  border-radius: 12px;
+  text-align: center;
+  font-weight: 500;
+  border: 1px solid rgba(232, 155, 60, 0.2);
+  box-shadow: inset 0 0 20px rgba(232, 155, 60, 0.05);
+}
+
+.calc label {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 18px;
+  font-family: 'JetBrains Mono', monospace;
+  letter-spacing: 0.02em;
+  min-height: 52px;
+}
+
+.calc input {
+  width: 100%;
+  padding: 12px 0;
+  margin-top: 8px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--border);
+  font-size: 18px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  outline: none;
+  transition: all 0.2s;
+  color: var(--text);
+}
+
+.calc input:focus {
+  border-bottom-color: var(--gold);
+  box-shadow: 0 1px 0 0 var(--gold);
+}
+
+.calc input::placeholder {
+  color: #4a3670;
+}
+
+.calc input::-webkit-outer-spin-button,
+.calc input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.calc button {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-bright) 100%);
+  color: var(--bg-deep);
+  border: none;
+  border-radius: 12px;
+  font-family: 'Inter', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition: all 0.25s;
+  margin-top: auto;
+  box-shadow: 0 4px 20px rgba(232, 155, 60, 0.2);
+}
+
+.calc button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(232, 155, 60, 0.4);
+}
+
+.calc button:active {
+  transform: translateY(0);
+}
+
+.result {
+  margin-top: 16px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+  padding: 14px;
+  border-radius: 12px;
+  background: var(--bg-deep);
+  text-align: center;
+  border: 1px solid var(--border);
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.result:not(:empty) {
+  color: var(--gold);
+  font-weight: 600;
+  background: linear-gradient(135deg, rgba(232, 155, 60, 0.1), rgba(181, 124, 217, 0.05));
+  border-color: var(--gold);
+  box-shadow: 0 0 20px var(--glow-gold);
+}
+
+/* ============ ПОИСК ============ */
+.search-wrap {
+  max-width: 1200px;
+  margin: 0 auto 32px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.search-input {
+  flex: 1;
+  padding: 16px 20px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.search-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px var(--glow-gold);
+}
+
+.search-input::placeholder {
+  color: var(--muted);
+}
+
+.search-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* ============ МОБИЛЬНАЯ ВЕРСИЯ ============ */
+@media (max-width: 1024px) {
+  body { padding: 40px 24px; }
+  header h1 { font-size: 56px; }
+  .hub-card h2 { font-size: 32px; }
+  .calcs { grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 20px; }
+  .hub-card .char { width: 150px; height: 150px; }
+  .card .char { width: 120px; height: 120px; }
+}
+
+@media (max-width: 768px) {
+  body { padding: 30px 18px; }
+  header { margin-bottom: 40px; padding-bottom: 24px; }
+  header h1 { font-size: 40px; }
+  header p { font-size: 15px; }
+
+  .hub { grid-template-columns: 1fr; gap: 16px; }
+  .hub-card { padding: 32px 24px; min-height: 280px; border-radius: 18px; }
+  .hub-card h2 { font-size: 28px; margin: 20px 0 10px; }
+  .hub-card p { font-size: 14px; max-width: 70%; }
+  .hub-card .char { width: 130px; height: 130px; right: -15px; bottom: -15px; }
+
+  .menu { grid-template-columns: 1fr; gap: 14px; }
+  .card { padding: 24px 20px; min-height: 200px; border-radius: 16px; }
+  .card h2 { font-size: 20px; }
+  .card p { font-size: 13px; max-width: 65%; }
+  .card .char { width: 110px; height: 110px; }
+
+  .search-wrap { margin-bottom: 24px; gap: 10px; }
+  .search-input { padding: 14px 16px; font-size: 15px; border-radius: 12px; }
+  .search-count { font-size: 11px; }
+
+  .calcs { grid-template-columns: 1fr; gap: 16px; grid-auto-rows: auto; }
+  .calc { padding: 24px 20px; border-radius: 16px; min-height: auto; }
+  .calc h2 { font-size: 17px; min-height: auto; margin-bottom: 12px; }
+  .formula { font-size: 14px; padding: 10px 12px; margin-bottom: 20px; }
+  .calc label { font-size: 12px; margin-bottom: 14px; min-height: auto; }
+  .calc input { font-size: 16px; padding: 12px 0; }
+  .calc button { padding: 16px; font-size: 15px; margin-top: 12px; }
+  .result { font-size: 14px; padding: 12px; min-height: 44px; margin-top: 12px; }
+  .back { font-size: 12px; margin-bottom: 24px; }
+}
+
+@media (max-width: 400px) {
+  body { padding: 24px 14px; }
+  header h1 { font-size: 34px; }
+  .hub-card h2 { font-size: 24px; }
+  .card h2 { font-size: 18px; }
+  .calc h2 { font-size: 16px; }
+  .hub-card .char { width: 100px; height: 100px; }
+  .card .char { width: 90px; height: 90px; }
+}
