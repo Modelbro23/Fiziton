@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Формуляр - Физитон</title>
+  <title>Формуляр — Физитон</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
@@ -23,45 +23,58 @@
     <a href="mehanika.html" class="card">
       <span class="icon">01 / механика</span>
       <h2>Механика</h2>
-      <p>Скорость, сила, работа</p>
+      <p id="count-mehanika">…</p>
       <img src="../assets/mehanika.png" alt="" class="char">
     </a>
 
     <a href="termo.html" class="card">
       <span class="icon">02 / термодинамика</span>
       <h2>Термодинамика</h2>
-      <p>Теплота, КПД, газы</p>
+      <p id="count-termo">…</p>
       <img src="../assets/termo.png" alt="" class="char">
     </a>
 
     <a href="electro.html" class="card">
       <span class="icon">03 / электричество</span>
       <h2>Электричество</h2>
-      <p>Ток, магнетизм, индукция</p>
+      <p id="count-electro">…</p>
       <img src="../assets/electro.png" alt="" class="char">
     </a>
 
     <a href="optika.html" class="card">
       <span class="icon">04 / оптика</span>
       <h2>Оптика</h2>
-      <p>Свет, линзы, фотоэффект</p>
+      <p id="count-optika">…</p>
       <img src="../assets/optika.png" alt="" class="char">
     </a>
 
     <a href="atom.html" class="card">
       <span class="icon">05 / атомная физика</span>
       <h2>Атомная физика</h2>
-      <p>Ядро, распад, фотоэффект</p>
+      <p id="count-atom">…</p>
       <img src="../assets/atom.png" alt="" class="char">
     </a>
 
     <a href="astro.html" class="card">
       <span class="icon">06 / астрономия</span>
       <h2>Астрономия</h2>
-      <p>Кеплер, космос, звёзды</p>
+      <p id="count-astro">…</p>
       <img src="../assets/astro.png" alt="" class="char">
     </a>
 
+    <a href="favorites.html" class="card">
+      <span class="icon">★ / избранное</span>
+      <h2>Избранное</h2>
+      <p>Формулы, которые ты сохранил</p>
+      <img src="../assets/aksiom.png" alt="" class="char">
+    </a>
+
   </main>
+
+  <script src="../formulas.js"></script>
+  <script src="../script.js"></script>
+  <script>
+    updateCalculatorCounts();
+  </script>
 </body>
-</html>  
+</html>

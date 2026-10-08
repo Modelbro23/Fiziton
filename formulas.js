@@ -4187,15 +4187,15 @@ const formulas = [
     section: 'astro',
     class: 11,
     title: 'Закон Хаббла',
-    formula: 'v = H·r',
+    formula: 'v = H·r (H = 70)',
     inputs: [
-      { key: 'h', label: 'Постоянная Хаббла H', unit: 'км/(с·Мпк)' },
       { key: 'r', label: 'Расстояние r', unit: 'Мпк' }
     ],
-    calc: (x) => x.h * x.r,
+    calc: (x) => 70 * x.r,
     resultLabel: 'v',
     resultUnit: 'км/с'
   },
+  
   {
     id: 'luminosity',
     section: 'astro',

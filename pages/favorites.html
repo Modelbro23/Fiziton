@@ -3,27 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Электричество — Физитон</title>
+  <title>Избранное — Физитон</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/style-space.css">
 </head>
 <body>
+
   <div class="stars-bg"></div>
+
   <a href="calculator.html" class="back">← формуляр</a>
 
   <header>
-    <h1>Электричество</h1>
-    <p id="count-electro">…</p>
+    <h1>Избранное</h1>
+    <p>твои сохранённые формулы</p>
   </header>
 
-  <main id="formulas-container"></main>
+  <main id="favorites-container"></main>
 
   <script src="../formulas.js"></script>
   <script src="../script.js"></script>
   <script>
-    renderSection('mehanika', 'formulas-container');
+    renderFavorites('favorites-container');
   </script>
 </body>
 </html>
