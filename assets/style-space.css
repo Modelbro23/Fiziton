@@ -839,3 +839,209 @@ header p {
   .hub-card .char { width: 100px; height: 100px; }
   .card .char { width: 90px; height: 90px; }
 }
+
+/* ============ КНОПКИ МАТЕРИАЛОВ ============ */
+.materials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0 10px;
+}
+
+.material-btn {
+  padding: 5px 10px;
+  background: var(--surface-hover);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.material-btn:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: var(--bg-deep);
+  transform: translateY(-1px);
+}
+
+.material-btn:active {
+  transform: translateY(0);
+}
+
+/* Подсветка после подстановки */
+input.material-applied {
+  animation: materialFlash 0.6s ease;
+}
+
+@keyframes materialFlash {
+  0%, 100% { color: var(--text); }
+  50%      { color: var(--gold); box-shadow: 0 1px 0 0 var(--gold); }
+}
+
+/* Мобильная версия */
+@media (max-width: 768px) {
+  .material-btn {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+}
+
+/* ============ ГЛОБАЛЬНЫЙ ПОИСК ============ */
+.global-search-wrap {
+  max-width: 1200px;
+  margin: 0 auto 32px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.global-search-input {
+  flex: 1;
+  padding: 20px 24px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: 16px;
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  outline: none;
+  transition: all 0.3s;
+}
+
+.global-search-input:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 4px var(--glow-gold), 0 0 40px var(--glow-gold);
+  transform: scale(1.005);
+}
+
+.global-search-input::placeholder {
+  color: var(--muted);
+}
+
+.global-search-count {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 14px;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  font-weight: 600;
+}
+
+.global-search-results {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.global-result {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 20px 24px;
+  background: linear-gradient(135deg, var(--surface) 0%, var(--bg-deep) 100%);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.25s;
+}
+
+.global-result:hover {
+  border-color: var(--gold);
+  transform: translateX(4px);
+  box-shadow: 0 0 0 1px var(--gold), 0 0 30px var(--glow-gold);
+}
+
+.global-result-left {
+  flex: 1;
+  min-width: 0;
+}
+
+.global-result-formula {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  color: var(--gold);
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.global-result-title {
+  font-size: 16px;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.global-result-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.global-result-section {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  background: var(--bg-deep);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  white-space: nowrap;
+}
+
+.global-result-arrow {
+  color: var(--muted);
+  font-size: 18px;
+  transition: all 0.25s;
+}
+
+.global-result:hover .global-result-arrow {
+  color: var(--gold);
+  transform: translateX(4px);
+}
+
+.global-empty {
+  max-width: 1200px;
+  margin: 40px auto;
+  text-align: center;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+  padding: 60px 30px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+}
+
+/* Мобильная версия */
+@media (max-width: 768px) {
+  .global-search-input {
+    padding: 16px 18px;
+    font-size: 16px;
+  }
+
+  .global-result {
+    padding: 16px 18px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .global-result-right {
+    align-self: flex-end;
+  }
+
+  .global-result-section {
+    font-size: 10px;
+  }
+}
